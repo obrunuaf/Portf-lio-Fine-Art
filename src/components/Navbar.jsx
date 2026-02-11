@@ -19,7 +19,7 @@ export default function Navbar({ onMobileMenuToggle }) {
         <a href="#hero" className="flex items-center gap-3">
           <img
             src="/logo-b.png"
-            alt="BF"
+            alt="Bruno França — Fotografia Aérea Fine Art"
             className="w-9 h-9 md:w-10 md:h-10 rounded-md object-contain flex-shrink-0"
             style={{background: '#FAFAFA'}}
           />

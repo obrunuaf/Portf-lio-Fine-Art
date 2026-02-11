@@ -5,8 +5,10 @@ import { artworks, getImageSrc } from '../data/artworks'
 export default function Modal({ artwork, onClose, onPrev, onNext }) {
   const [closing, setClosing] = useState(false)
   const [controlsVisible, setControlsVisible] = useState(true)
+  const [photoKey, setPhotoKey] = useState(0) // U8: triggers fade animation
 
   const hideControlsTimer = useRef(null)
+  const originalTitle = useRef(document.title) // U10: save original title
 
   // Current position (e.g. "3 / 10")
   const currentIndex = artworks.indexOf(artwork)
@@ -16,10 +18,25 @@ export default function Modal({ artwork, onClose, onPrev, onNext }) {
   useEffect(() => {
     setClosing(false)
     setControlsVisible(true)
-  }, [artwork])
+    setPhotoKey(k => k + 1) // U8: increment key → re-trigger fade
+
+    // U10: Dynamic document.title
+    document.title = `${artwork.title} — Bruno França`
+
+    // U9: Preload adjacent images
+    if (currentIndex > 0) {
+      const prev = new Image()
+      prev.src = getImageSrc(artworks[currentIndex - 1].filename)
+    }
+    if (currentIndex < artworks.length - 1) {
+      const next = new Image()
+      next.src = getImageSrc(artworks[currentIndex + 1].filename)
+    }
+  }, [artwork, currentIndex])
 
   const handleClose = useCallback(() => {
     setClosing(true)
+    document.title = originalTitle.current // U10: restore title
     setTimeout(() => onClose(), 250)
   }, [onClose])
 
@@ -49,6 +66,7 @@ export default function Modal({ artwork, onClose, onPrev, onNext }) {
     return () => {
       document.removeEventListener("keydown", handleKey)
       document.body.style.overflow = ""
+      document.title = originalTitle.current // U10: restore on unmount
       if (hideControlsTimer.current) clearTimeout(hideControlsTimer.current)
     }
   }, [handleClose, onPrev, onNext, resetHideTimer])
@@ -65,8 +83,6 @@ export default function Modal({ artwork, onClose, onPrev, onNext }) {
   }
 
   if (!artwork) return null
-
-
 
   return (
     <div
@@ -123,7 +139,8 @@ export default function Modal({ artwork, onClose, onPrev, onNext }) {
         className="w-full h-full"
         onClick={(e) => { if (e.target === e.currentTarget) handleClose() }}
       >
-        <div className="relative w-full h-screen flex items-center justify-center">
+        {/* U8: key change triggers CSS fade-in animation */}
+        <div key={photoKey} className="relative w-full h-screen flex items-center justify-center photo-fade-in">
           <div className="w-full h-full flex items-center justify-center px-4 py-14 md:px-16 md:py-16">
             <ZoomableImage
               src={getImageSrc(artwork.filename)}
@@ -154,3 +171,5 @@ export default function Modal({ artwork, onClose, onPrev, onNext }) {
     </div>
   )
 }
+
+

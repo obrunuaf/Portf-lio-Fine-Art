@@ -66,6 +66,8 @@ export default function Gallery({ onOpenModal }) {
           className={`showcase-piece showcase-hero ${isVisible(1) ? 'fade-in-up' : 'opacity-0'}`}
           data-id="1"
           onClick={() => onOpenModal(artworks[0])}
+          role="button" tabIndex={0} aria-label={`Ver ${artworks[0].title}`}
+          onKeyDown={(e) => e.key === 'Enter' && onOpenModal(artworks[0])}
         >
           <ArtImage
             src={getImageSrc(artworks[0].filename)}
@@ -96,6 +98,8 @@ export default function Gallery({ onOpenModal }) {
           className={`showcase-piece showcase-split ${isVisible(2) ? 'fade-in-up' : 'opacity-0'}`}
           data-id="2"
           onClick={() => onOpenModal(artworks[1])}
+          role="button" tabIndex={0} aria-label={`Ver ${artworks[1].title}`}
+          onKeyDown={(e) => e.key === 'Enter' && onOpenModal(artworks[1])}
         >
           <div className="split-image">
             <ArtImage
@@ -136,6 +140,8 @@ export default function Gallery({ onOpenModal }) {
               data-id={art.id}
               style={{ animationDelay: `${i * 0.15}s` }}
               onClick={() => onOpenModal(art)}
+              role="button" tabIndex={0} aria-label={`Ver ${art.title}`}
+              onKeyDown={(e) => e.key === 'Enter' && onOpenModal(art)}
             >
               <span className="duo-number">{pad(art.id)}</span>
               <ArtImage
@@ -163,6 +169,8 @@ export default function Gallery({ onOpenModal }) {
           className={`showcase-piece showcase-hero ${isVisible(5) ? 'fade-in-up' : 'opacity-0'}`}
           data-id="5"
           onClick={() => onOpenModal(artworks[4])}
+          role="button" tabIndex={0} aria-label={`Ver ${artworks[4].title}`}
+          onKeyDown={(e) => e.key === 'Enter' && onOpenModal(artworks[4])}
         >
           <ArtImage
             src={getImageSrc(artworks[4].filename)}
@@ -193,6 +201,8 @@ export default function Gallery({ onOpenModal }) {
           className={`showcase-piece showcase-split reverse dark ${isVisible(6) ? 'fade-in-up' : 'opacity-0'}`}
           data-id="6"
           onClick={() => onOpenModal(artworks[5])}
+          role="button" tabIndex={0} aria-label={`Ver ${artworks[5].title}`}
+          onKeyDown={(e) => e.key === 'Enter' && onOpenModal(artworks[5])}
         >
           <div className="split-text">
             <span className="piece-number">{pad(6)}</span>
@@ -233,6 +243,8 @@ export default function Gallery({ onOpenModal }) {
               data-id={art.id}
               style={{ animationDelay: `${i * 0.15}s` }}
               onClick={() => onOpenModal(art)}
+              role="button" tabIndex={0} aria-label={`Ver ${art.title}`}
+              onKeyDown={(e) => e.key === 'Enter' && onOpenModal(art)}
             >
               <span className="duo-number">{pad(art.id)}</span>
               <ArtImage
@@ -260,6 +272,8 @@ export default function Gallery({ onOpenModal }) {
           className={`showcase-piece showcase-hero ${isVisible(9) ? 'fade-in-up' : 'opacity-0'}`}
           data-id="9"
           onClick={() => onOpenModal(artworks[8])}
+          role="button" tabIndex={0} aria-label={`Ver ${artworks[8].title}`}
+          onKeyDown={(e) => e.key === 'Enter' && onOpenModal(artworks[8])}
         >
           <ArtImage
             src={getImageSrc(artworks[8].filename)}
@@ -290,6 +304,8 @@ export default function Gallery({ onOpenModal }) {
           className={`showcase-piece showcase-split ${isVisible(10) ? 'fade-in-up' : 'opacity-0'}`}
           data-id="10"
           onClick={() => onOpenModal(artworks[9])}
+          role="button" tabIndex={0} aria-label={`Ver ${artworks[9].title}`}
+          onKeyDown={(e) => e.key === 'Enter' && onOpenModal(artworks[9])}
         >
           <div className="split-image">
             <ArtImage

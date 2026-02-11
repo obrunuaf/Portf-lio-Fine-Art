@@ -146,6 +146,19 @@ body {
   animation: backdropOut 0.25s ease forwards;
 }
 
+/* U8: Photo transition fade */
+@keyframes photoFadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+.photo-fade-in {
+  animation: photoFadeIn 0.35s ease-out forwards;
+}
+
 /* ===== FILTER PILLS ===== */
 .filter-pill {
   padding: 8px 20px;
@@ -377,6 +390,11 @@ body {
   right: 0;
   padding: 40px 24px 24px;
   background: linear-gradient(to top, rgba(0, 0, 0, 0.65) 0%, transparent 100%);
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+.showcase-duo-item:hover .duo-info {
+  opacity: 1;
 }
 .showcase-duo-item .duo-number {
   font-family: "Playfair Display", serif;
