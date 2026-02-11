@@ -1,0 +1,1642 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Bruno França | Fotografia Aérea Fine Art</title>
+    <meta
+      name="description"
+      content="Portfólio de fotografia aérea fine art por Bruno França. Coleção Maragogi Secret — paisagens capturadas com DJI Air 3S sobre o litoral alagoano."
+    />
+    <meta name="author" content="Bruno França — @obrunuaf" />
+    <meta
+      property="og:title"
+      content="Bruno França | Fotografia Aérea Fine Art"
+    />
+    <meta
+      property="og:description"
+      content="Portfólio de fotografia aérea fine art. Coleção em destaque: Maragogi Secret — o litoral de Alagoas visto do alto."
+    />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://obrunuaf.com.br" />
+    <meta property="og:image" content="https://obrunuaf.com.br/Maragogi%20Secret/Solid%C3%A3o%20N%C3%A1utica.jpg" />
+    <meta name="theme-color" content="#FAFAFA" />
+    <link rel="canonical" href="https://obrunuaf.com.br" />
+    <link rel="icon" type="image/png" href="./favicon.png" />
+    <link rel="preload" as="image" href="./Maragogi%20Secret/Solid%C3%A3o%20N%C3%A1utica.jpg" />
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Montserrat:wght@300;400;500;600&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              serif: ["Playfair Display", "Georgia", "serif"],
+              sans: ["Montserrat", "Helvetica Neue", "sans-serif"],
+            },
+            colors: {
+              canvas: "#FAFAFA",
+              ink: "#1A1A1A",
+              muted: "#6B7280",
+              accent: "#2A6F6F",
+              "accent-light": "#3D9B9B",
+              warm: "#F5F0EB",
+            },
+          },
+        },
+      };
+    </script>
+
+    <!-- React -->
+    <script
+      crossorigin
+      src="https://unpkg.com/react@18/umd/react.production.min.js"
+    ></script>
+    <script
+      crossorigin
+      src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"
+    ></script>
+    <script
+      crossorigin
+      src="https://unpkg.com/@babel/standalone/babel.min.js"
+    ></script>
+
+    <style>
+      /* ===== BASE ===== */
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      html {
+        scroll-behavior: smooth;
+      }
+      body {
+        font-family: "Montserrat", sans-serif;
+        background: #fafafa;
+        color: #1a1a1a;
+        overflow-x: hidden;
+      }
+
+      /* ===== SCROLLBAR ===== */
+      ::-webkit-scrollbar {
+        width: 6px;
+      }
+      ::-webkit-scrollbar-track {
+        background: #fafafa;
+      }
+      ::-webkit-scrollbar-thumb {
+        background: #cbd5e0;
+        border-radius: 3px;
+      }
+      ::-webkit-scrollbar-thumb:hover {
+        background: #a0aec0;
+      }
+
+      /* ===== KEN BURNS ===== */
+      @keyframes kenBurns {
+        0% {
+          transform: scale(1) translate(0, 0);
+        }
+        25% {
+          transform: scale(1.12) translate(-1.5%, -1%);
+        }
+        50% {
+          transform: scale(1.08) translate(1%, -0.5%);
+        }
+        75% {
+          transform: scale(1.15) translate(-0.5%, 1%);
+        }
+        100% {
+          transform: scale(1) translate(0, 0);
+        }
+      }
+      .ken-burns {
+        animation: kenBurns 25s ease-in-out infinite;
+      }
+
+      /* ===== FADE IN ===== */
+      @keyframes fadeInUp {
+        from {
+          opacity: 0;
+          transform: translateY(30px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      .fade-in-up {
+        opacity: 0;
+        animation: fadeInUp 0.8s ease forwards;
+      }
+
+      /* ===== MODAL ANIMATION ===== */
+      @keyframes modalIn {
+        from { opacity: 0; transform: scale(0.95) translateY(10px); }
+        to   { opacity: 1; transform: scale(1) translateY(0); }
+      }
+      @keyframes modalOut {
+        from { opacity: 1; transform: scale(1) translateY(0); }
+        to   { opacity: 0; transform: scale(0.95) translateY(10px); }
+      }
+      .modal-enter {
+        animation: modalIn 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+      }
+      .modal-exit {
+        animation: modalOut 0.25s ease-in forwards;
+      }
+      @keyframes backdropIn {
+        from { opacity: 0; }
+        to   { opacity: 1; }
+      }
+      @keyframes backdropOut {
+        from { opacity: 1; }
+        to   { opacity: 0; }
+      }
+      .backdrop-enter {
+        animation: backdropIn 0.3s ease forwards;
+      }
+      .backdrop-exit {
+        animation: backdropOut 0.25s ease forwards;
+      }
+
+      /* ===== MODAL NAV ARROWS ===== */
+      .modal-arrow {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 44px;
+        height: 44px;
+        border-radius: 50%;
+        background: rgba(255,255,255,0.9);
+        border: none;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 2px 12px rgba(0,0,0,0.15);
+        transition: all 0.2s ease;
+        z-index: 110;
+      }
+      .modal-arrow:hover {
+        background: white;
+        transform: translateY(-50%) scale(1.1);
+      }
+      .modal-arrow.prev { left: 12px; }
+      .modal-arrow.next { right: 12px; }
+
+      /* ===== IMAGE SHIMMER ===== */
+      @keyframes shimmer {
+        0%   { background-position: -400px 0; }
+        100% { background-position: 400px 0; }
+      }
+      .img-shimmer {
+        background: linear-gradient(90deg, #e2e8f0 25%, #f1f5f9 50%, #e2e8f0 75%);
+        background-size: 800px 100%;
+        animation: shimmer 1.5s ease-in-out infinite;
+      }
+
+      /* ===== HERO OVERLAY ===== */
+      .hero-overlay {
+        background: linear-gradient(
+          to bottom,
+          rgba(0, 0, 0, 0.40) 0%,
+          rgba(0, 0, 0, 0.10) 30%,
+          rgba(0, 0, 0, 0.10) 50%,
+          rgba(0, 0, 0, 0.65) 100%
+        );
+      }
+      .hero-text {
+        text-shadow: 0 2px 20px rgba(0, 0, 0, 0.5), 0 1px 4px rgba(0, 0, 0, 0.3);
+      }
+      .hero-sub {
+        text-shadow: 0 1px 10px rgba(0, 0, 0, 0.4);
+      }
+
+      /* ===== SHOWCASE GALLERY ===== */
+      .showcase-section {
+        display: flex;
+        flex-direction: column;
+        gap: 0;
+      }
+
+      /* Hero Full-Width */
+      .showcase-hero {
+        position: relative;
+        width: 100vw;
+        margin-left: calc(-50vw + 50%);
+        height: 80vh;
+        min-height: 500px;
+        overflow: hidden;
+        cursor: pointer;
+      }
+      .showcase-hero img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      }
+      .showcase-hero:hover img {
+        transform: scale(1.03);
+      }
+      .showcase-hero .hero-info {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        padding: 60px 40px 40px;
+        background: linear-gradient(to top, rgba(0,0,0,0.7) 0%, transparent 100%);
+        display: flex;
+        align-items: flex-end;
+        gap: 24px;
+      }
+      .showcase-hero .hero-info .piece-number {
+        font-family: 'Playfair Display', serif;
+        font-size: 5rem;
+        font-weight: 700;
+        color: rgba(255,255,255,0.15);
+        line-height: 1;
+        flex-shrink: 0;
+      }
+
+      /* Split Panel */
+      .showcase-split {
+        display: grid;
+        grid-template-columns: 3fr 2fr;
+        min-height: 70vh;
+        cursor: pointer;
+      }
+      .showcase-split.reverse {
+        grid-template-columns: 2fr 3fr;
+      }
+      .showcase-split .split-image {
+        overflow: hidden;
+        position: relative;
+      }
+      .showcase-split .split-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      }
+      .showcase-split:hover .split-image img {
+        transform: scale(1.03);
+      }
+      .showcase-split .split-text {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        padding: 60px 50px;
+        background: #FAFAFA;
+      }
+      .showcase-split.dark .split-text {
+        background: #1A1A1A;
+      }
+      .showcase-split .piece-number {
+        font-family: 'Playfair Display', serif;
+        font-size: 6rem;
+        font-weight: 700;
+        color: rgba(0,0,0,0.06);
+        line-height: 1;
+        margin-bottom: -10px;
+      }
+      .showcase-split.dark .piece-number {
+        color: rgba(255,255,255,0.06);
+      }
+
+      /* Duo Row */
+      .showcase-duo {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 20px;
+        padding: 0 20px;
+      }
+      .showcase-duo-item {
+        position: relative;
+        overflow: hidden;
+        cursor: pointer;
+        border-radius: 4px;
+      }
+      .showcase-duo-item img {
+        width: 100%;
+        aspect-ratio: 16/10;
+        object-fit: cover;
+        display: block;
+        transition: transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      }
+      .showcase-duo-item:hover img {
+        transform: scale(1.03);
+      }
+      .showcase-duo-item .duo-info {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        padding: 40px 24px 24px;
+        background: linear-gradient(to top, rgba(0,0,0,0.65) 0%, transparent 100%);
+      }
+      .showcase-duo-item .duo-number {
+        font-family: 'Playfair Display', serif;
+        font-size: 3rem;
+        font-weight: 700;
+        color: rgba(255,255,255,0.12);
+        line-height: 1;
+        position: absolute;
+        top: 16px;
+        left: 20px;
+      }
+
+      /* Spacer between blocks */
+      .showcase-spacer {
+        height: 80px;
+      }
+      .showcase-spacer-lg {
+        height: 120px;
+      }
+
+      /* Mobile responsive */
+      @media (max-width: 768px) {
+        .showcase-hero {
+          height: 60vh;
+          min-height: 350px;
+        }
+        .showcase-hero .hero-info {
+          padding: 40px 20px 24px;
+        }
+        .showcase-hero .hero-info .piece-number {
+          font-size: 3rem;
+        }
+        .showcase-split {
+          grid-template-columns: 1fr;
+          min-height: auto;
+        }
+        .showcase-split.reverse {
+          grid-template-columns: 1fr;
+        }
+        .showcase-split .split-image {
+          height: 50vh;
+        }
+        .showcase-split .split-text {
+          padding: 32px 24px;
+        }
+        .showcase-split .piece-number {
+          font-size: 4rem;
+        }
+        .showcase-duo {
+          grid-template-columns: 1fr;
+          padding: 0;
+        }
+        .showcase-duo-item .duo-number {
+          font-size: 2rem;
+        }
+        .showcase-spacer {
+          height: 40px;
+        }
+        .showcase-spacer-lg {
+          height: 60px;
+        }
+      }
+
+      /* ===== MODAL ===== */
+      .modal-backdrop {
+        background: rgba(0, 0, 0, 0.85);
+        backdrop-filter: blur(8px);
+        -webkit-backdrop-filter: blur(8px);
+      }
+
+      /* ===== WALL SIMULATION ===== */
+      .wall-bg {
+        background: linear-gradient(
+          135deg,
+          #f5f0eb 0%,
+          #e8e0d8 50%,
+          #f0ebe5 100%
+        );
+        position: relative;
+      }
+      .wall-bg::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background-image:
+          repeating-linear-gradient(
+            90deg,
+            transparent,
+            transparent 80px,
+            rgba(0, 0, 0, 0.015) 80px,
+            rgba(0, 0, 0, 0.015) 81px
+          ),
+          repeating-linear-gradient(
+            0deg,
+            transparent,
+            transparent 80px,
+            rgba(0, 0, 0, 0.015) 80px,
+            rgba(0, 0, 0, 0.015) 81px
+          );
+        pointer-events: none;
+      }
+
+      .frame-shadow {
+        box-shadow:
+          0 4px 20px rgba(0, 0, 0, 0.15),
+          0 8px 40px rgba(0, 0, 0, 0.1),
+          inset 0 0 0 1px rgba(255, 255, 255, 0.1);
+      }
+
+      /* ===== NAV ===== */
+      .nav-glass {
+        background: rgba(250, 250, 250, 0.85);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+      }
+      .nav-glass.scrolled {
+        box-shadow: 0 1px 20px rgba(0, 0, 0, 0.06);
+      }
+
+      /* ===== FILTER PILLS ===== */
+      .filter-pill {
+        padding: 8px 20px;
+        border-radius: 100px;
+        font-size: 0.8rem;
+        font-weight: 500;
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+        transition: all 0.3s ease;
+        cursor: pointer;
+        border: 1.5px solid transparent;
+        background: transparent;
+        color: #6b7280;
+      }
+      .filter-pill:hover {
+        color: #1a1a1a;
+        border-color: #cbd5e0;
+      }
+      .filter-pill.active {
+        background: #1a1a1a;
+        color: #fafafa;
+        border-color: #1a1a1a;
+      }
+
+      /* ===== PLACEHOLDER ===== */
+      .img-placeholder {
+        background: linear-gradient(135deg, #e2e8f0 0%, #cbd5e0 100%);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #94a3b8;
+        font-family: "Playfair Display", serif;
+        font-style: italic;
+        font-size: 1rem;
+        text-align: center;
+        padding: 20px;
+      }
+
+      /* ===== ABOUT SECTION ===== */
+      .about-divider {
+        width: 60px;
+        height: 2px;
+        background: #2a6f6f;
+      }
+
+      /* ===== STAGGER ANIMATIONS ===== */
+      .stagger-1 {
+        animation-delay: 0.1s;
+      }
+      .stagger-2 {
+        animation-delay: 0.2s;
+      }
+      .stagger-3 {
+        animation-delay: 0.3s;
+      }
+      .stagger-4 {
+        animation-delay: 0.4s;
+      }
+      .stagger-5 {
+        animation-delay: 0.5s;
+      }
+      .stagger-6 {
+        animation-delay: 0.6s;
+      }
+      .stagger-7 {
+        animation-delay: 0.7s;
+      }
+      .stagger-8 {
+        animation-delay: 0.8s;
+      }
+      .stagger-9 {
+        animation-delay: 0.9s;
+      }
+      .stagger-10 {
+        animation-delay: 1s;
+      }
+
+      /* ===== MOBILE MENU ===== */
+      .mobile-menu {
+        transform: translateX(100%);
+        transition: transform 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      }
+      .mobile-menu.open {
+        transform: translateX(0);
+      }
+    </style>
+  </head>
+  <body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+      const { useState, useEffect, useRef, useCallback } = React;
+
+      // ─── SHARED ICONS ──────────────────────────────────────────
+      const INSTAGRAM_PATH = "M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z";
+
+      function InstagramIcon({ className }) {
+        return (
+          <svg className={className || "w-5 h-5"} fill="currentColor" viewBox="0 0 24 24">
+            <path d={INSTAGRAM_PATH} />
+          </svg>
+        );
+      }
+
+      // ─── DATA ────────────────────────────────────────────────────
+      const artworks = [
+        {
+          id: 1,
+          title: "Solidão Náutica",
+          filename: "Solidão Náutica.jpg",
+          description:
+            "Na imensidão turquesa de São Bento, uma embarcação repousa em silêncio. A obra principal da coleção.",
+          category: "Minimalismo",
+          orientation: "landscape",
+          details: {
+            drone: "DJI Air 3S",
+            sensor: '1" CMOS 50MP',
+            resolution: "8064 × 6048 px",
+            format: "JPEG",
+            location: "São Bento, Maragogi — AL",
+          },
+        },
+        {
+          id: 2,
+          title: "Arquitetura de Coral",
+          filename: "Arquitetura de Coral.jpg",
+          description:
+            "Visto de cima, o recife deixa de ser pedra e vira mapa. Tons de ocre e dourado esculpidos por séculos de marés.",
+          category: "Textura",
+          orientation: "portrait",
+          details: {
+            drone: "DJI Air 3S",
+            sensor: '1" CMOS 50MP',
+            resolution: "8064 × 6048 px",
+            format: "JPEG",
+            location: "Maragogi — AL",
+          },
+        },
+        {
+          id: 3,
+          title: "Fronteira de Sal",
+          filename: "1-DJI_20260202095408_0440_D.jpg",
+          description:
+            "A textura complexa onde o recife encontra a areia, criando uma fronteira natural visível apenas do céu.",
+          category: "Abstrato",
+          orientation: "landscape",
+          details: {
+            drone: "DJI Air 3S",
+            sensor: '1" CMOS 50MP',
+            resolution: "8064 × 6048 px",
+            format: "JPEG",
+            location: "Maragogi — AL",
+          },
+        },
+        {
+          id: 4,
+          title: "Caminho do Mar",
+          filename: "2-DJI_20260202095431_0442_D.jpg",
+          description:
+            "O movimento de uma embarcação traçando seu curso ao longo da barreira de corais.",
+          category: "Movimento",
+          orientation: "landscape",
+          details: {
+            drone: "DJI Air 3S",
+            sensor: '1" CMOS 50MP',
+            resolution: "8064 × 6048 px",
+            format: "JPEG",
+            location: "Maragogi — AL",
+          },
+        },
+        {
+          id: 5,
+          title: "Porto Seguro",
+          filename: "3-DJI_20260202095824_0450_D.jpg",
+          description:
+            "Uma vista panorâmica da costa, onde as águas calmas protegem a vida marinha.",
+          category: "Paisagem",
+          orientation: "landscape",
+          details: {
+            drone: "DJI Air 3S",
+            sensor: '1" CMOS 50MP',
+            resolution: "8064 × 6048 px",
+            format: "JPEG",
+            location: "Maragogi — AL",
+          },
+        },
+        {
+          id: 6,
+          title: "Esmeralda Bruta",
+          filename: "4-DJI_20260202095848_0452_D.jpg",
+          description:
+            "A intensidade pura do turquesa alagoano, dividido pela linha orgânica dos recifes.",
+          category: "Cor",
+          orientation: "landscape",
+          details: {
+            drone: "DJI Air 3S",
+            sensor: '1" CMOS 50MP',
+            resolution: "8064 × 6048 px",
+            format: "JPEG",
+            location: "Maragogi — AL",
+          },
+        },
+        {
+          id: 7,
+          title: "Aquarela Costeira",
+          filename: "5-DJI_20260202095913_0453_D.jpg",
+          description:
+            "Pequenos barcos coloridos ancorados sobre a areia dourada, como pinceladas em uma tela.",
+          category: "Cultura",
+          orientation: "landscape",
+          details: {
+            drone: "DJI Air 3S",
+            sensor: '1" CMOS 50MP',
+            resolution: "8064 × 6048 px",
+            format: "JPEG",
+            location: "Maragogi — AL",
+          },
+        },
+        {
+          id: 8,
+          title: "Divisa Natural",
+          filename: "6-DJI_20260202100022_0456_D.jpg",
+          description:
+            "Um banco de areia extenso que divide o mar em dois tons, criando uma passarela natural.",
+          category: "Geometria",
+          orientation: "landscape",
+          details: {
+            drone: "DJI Air 3S",
+            sensor: '1" CMOS 50MP',
+            resolution: "8064 × 6048 px",
+            format: "JPEG",
+            location: "Maragogi — AL",
+          },
+        },
+        {
+          id: 9,
+          title: "Oásis de Areia",
+          filename: "7-DJI_20260202100117_0457_D.jpg",
+          description:
+            "A maré baixa revela caminhos efêmeros onde barcos repousam à espera do oceano.",
+          category: "Aéreo",
+          orientation: "landscape",
+          details: {
+            drone: "DJI Air 3S",
+            sensor: '1" CMOS 50MP',
+            resolution: "8064 × 6048 px",
+            format: "JPEG",
+            location: "Maragogi — AL",
+          },
+        },
+        {
+          id: 10,
+          title: "Constelação Náutica",
+          filename: "8-DJI_20260202151332_0473_D.jpg",
+          description:
+            "Visto de cima, as embarcações espalhadas pelo mar lembram estrelas em um céu líquido.",
+          category: "Top Down",
+          orientation: "landscape",
+          details: {
+            drone: "DJI Air 3S",
+            sensor: '1" CMOS 50MP',
+            resolution: "8064 × 6048 px",
+            format: "JPEG",
+            location: "Maragogi — AL",
+          },
+        },
+      ];
+
+      const categories = ["Todos", ...new Set(artworks.map((a) => a.category))];
+
+      const getImageSrc = (filename) => encodeURI(`./Maragogi Secret/${filename}`);
+
+      // ─── IMAGE WITH FALLBACK ─────────────────────────────────────
+      function ArtImage({ src, alt, className, style, onLoad, eager }) {
+        const [failed, setFailed] = useState(false);
+        const [loaded, setLoaded] = useState(false);
+
+        if (failed) {
+          return (
+            <div
+              className={`img-placeholder ${className || ""}`}
+              style={{ minHeight: 220, ...style }}
+            >
+              <span>{alt}</span>
+            </div>
+          );
+        }
+
+        return (
+          <div className="relative" style={style}>
+            {!loaded && (
+              <div className={`img-shimmer absolute inset-0 ${className || ""}`} style={{ minHeight: 220 }} />
+            )}
+            <img
+              src={src}
+              alt={alt}
+              className={`${className} transition-opacity duration-500 ${loaded ? 'opacity-100' : 'opacity-0'}`}
+              loading={eager ? "eager" : "lazy"}
+              onError={() => setFailed(true)}
+              onLoad={() => { setLoaded(true); onLoad && onLoad(); }}
+            />
+          </div>
+        );
+      }
+
+      // ─── NAVBAR ──────────────────────────────────────────────────
+      function Navbar({ onMobileMenuToggle }) {
+        const [scrolled, setScrolled] = useState(false);
+
+        useEffect(() => {
+          const handleScroll = () => setScrolled(window.scrollY > 50);
+          window.addEventListener("scroll", handleScroll);
+          return () => window.removeEventListener("scroll", handleScroll);
+        }, []);
+
+        return (
+          <nav
+            className={`fixed top-0 left-0 right-0 z-50 nav-glass transition-all duration-300 ${scrolled ? "scrolled" : ""}`}
+          >
+            <div className="max-w-7xl mx-auto px-6 md:px-10 h-16 md:h-20 flex items-center justify-between">
+              <a
+                href="#hero"
+                className="flex items-center gap-3"
+              >
+                <img src="./logo-b.png" alt="BF" className="w-9 h-9 md:w-10 md:h-10 rounded-md object-contain flex-shrink-0" style={{background: '#FAFAFA'}} />
+              </a>
+              {/* Desktop Nav */}
+              <div className="hidden md:flex items-center gap-8">
+                <a
+                  href="#galeria"
+                  className="font-sans text-xs uppercase tracking-widest text-muted hover:text-ink transition-colors duration-300"
+                >
+                  Galeria
+                </a>
+                <a
+                  href="#sobre"
+                  className="font-sans text-xs uppercase tracking-widest text-muted hover:text-ink transition-colors duration-300"
+                >
+                  Sobre
+                </a>
+                <a
+                  href="#contato"
+                  className="font-sans text-xs uppercase tracking-widest text-muted hover:text-ink transition-colors duration-300"
+                >
+                  Contato
+                </a>
+                <a
+                  href="https://instagram.com/obrunuaf"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-muted hover:text-ink transition-colors duration-300"
+                  aria-label="Instagram"
+                >
+                  <InstagramIcon />
+                </a>
+              </div>
+              {/* Mobile hamburger */}
+              <button
+                className="md:hidden text-ink p-2"
+                onClick={onMobileMenuToggle}
+                aria-label="Menu"
+              >
+                <svg
+                  className="w-6 h-6"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M4 6h16M4 12h16M4 18h16"
+                  />
+                </svg>
+              </button>
+            </div>
+          </nav>
+        );
+      }
+
+      // ─── MOBILE MENU ─────────────────────────────────────────────
+      function MobileMenu({ open, onClose }) {
+        return (
+          <div
+            className={`fixed inset-0 z-[60] ${open ? "" : "pointer-events-none"}`}
+          >
+            <div
+              className={`absolute inset-0 bg-black/40 transition-opacity duration-300 ${open ? "opacity-100" : "opacity-0"}`}
+              onClick={onClose}
+            />
+            <div
+              className={`mobile-menu ${open ? "open" : ""} absolute right-0 top-0 bottom-0 w-72 bg-canvas shadow-2xl flex flex-col pt-20 px-8`}
+            >
+              <button
+                className="absolute top-5 right-5 text-ink p-2"
+                onClick={onClose}
+                aria-label="Fechar Menu"
+              >
+                <svg
+                  className="w-6 h-6"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M6 18L18 6M6 6l12 12"
+                  />
+                </svg>
+              </button>
+              <a
+                href="#hero"
+                onClick={onClose}
+                className="font-serif text-2xl text-ink mb-6 hover:text-accent transition-colors"
+              >
+                Home
+              </a>
+              <a
+                href="#galeria"
+                onClick={onClose}
+                className="font-serif text-2xl text-ink mb-6 hover:text-accent transition-colors"
+              >
+                Galeria
+              </a>
+              <a
+                href="#sobre"
+                onClick={onClose}
+                className="font-serif text-2xl text-ink mb-6 hover:text-accent transition-colors"
+              >
+                Sobre
+              </a>
+              <a
+                href="#contato"
+                onClick={onClose}
+                className="font-serif text-2xl text-ink mb-6 hover:text-accent transition-colors"
+              >
+                Contato
+              </a>
+              <div className="mt-auto mb-8">
+                <a
+                  href="https://instagram.com/obrunuaf"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-3 text-muted hover:text-ink transition-colors"
+                >
+                  <InstagramIcon />
+                  <span className="text-sm font-sans">@obrunuaf</span>
+                </a>
+              </div>
+            </div>
+          </div>
+        );
+      }
+
+      // ─── HERO ────────────────────────────────────────────────────
+      function Hero() {
+        return (
+          <section
+            id="hero"
+            className="relative w-full h-screen overflow-hidden"
+          >
+            <div className="absolute inset-0">
+              <ArtImage
+                src={getImageSrc("Solidão Náutica.jpg")}
+                alt="Solidão Náutica — Maragogi Secret"
+                className="w-full h-full object-cover ken-burns"
+                style={{ minHeight: '100vh' }}
+                eager={true}
+              />
+            </div>
+            <div className="hero-overlay absolute inset-0" />
+            <div className="absolute inset-0 flex flex-col items-center justify-end pb-20 md:pb-28 text-center px-6">
+              <p className="font-sans text-white text-xs uppercase tracking-[0.3em] mb-4 fade-in-up hero-sub" style={{opacity: 0.9}}>
+                Fotografia Aérea Fine Art
+              </p>
+              <h1 className="font-serif text-white text-5xl md:text-7xl lg:text-8xl font-semibold leading-[1.1] fade-in-up stagger-2 hero-text">
+                Bruno
+                <br />
+                <span className="font-light italic">França</span>
+              </h1>
+              <p className="font-sans text-white text-sm md:text-base mt-6 max-w-lg leading-relaxed fade-in-up stagger-4 hero-sub" style={{opacity: 0.85}}>
+                Revelando, do alto, paisagens que o olhar terrestre não alcança.
+              </p>
+              <a href="#galeria" className="mt-10 fade-in-up stagger-6">
+                <svg
+                  className="w-6 h-6 text-white/50 animate-bounce"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="1.5"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M19 9l-7 7-7-7"
+                  />
+                </svg>
+              </a>
+            </div>
+          </section>
+        );
+      }
+
+      // ─── GALLERY ─────────────────────────────────────────────────
+      function Gallery({ onOpenModal }) {
+        const [visibleItems, setVisibleItems] = useState(new Set());
+        const observerRef = useRef(null);
+
+        useEffect(() => {
+          const timer = setTimeout(() => {
+            observerRef.current = new IntersectionObserver(
+              (entries) => {
+                entries.forEach((entry) => {
+                  if (entry.isIntersecting) {
+                    setVisibleItems(
+                      (prev) => new Set([...prev, entry.target.dataset.id]),
+                    );
+                    observerRef.current?.unobserve(entry.target);
+                  }
+                });
+              },
+              { threshold: 0.15 },
+            );
+
+            document.querySelectorAll(".showcase-piece").forEach((el) => {
+              observerRef.current.observe(el);
+            });
+          }, 50);
+
+          return () => {
+            clearTimeout(timer);
+            observerRef.current?.disconnect();
+          };
+        }, []);
+
+        const isVisible = (id) => visibleItems.has(String(id));
+        const pad = (n) => String(n).padStart(2, '0');
+
+        return (
+          <section
+            id="galeria"
+            className="py-20 md:py-32 max-w-7xl mx-auto"
+          >
+            {/* Section Header */}
+            <div className="text-center mb-20 px-6">
+              <div className="flex justify-center mb-8">
+                <img
+                  src="./logo-maragogi-secret.png"
+                  alt="Maragogi Secret — Fine Art Photography Collection"
+                  className="w-40 h-40 md:w-52 md:h-52 object-contain opacity-90 hover:opacity-100 transition-opacity duration-500"
+                  loading="lazy"
+                />
+              </div>
+              <p className="font-sans text-xs uppercase tracking-[0.3em] text-accent mb-3">
+                Coleção em Destaque
+              </p>
+              <h2 className="font-serif text-4xl md:text-5xl font-semibold text-ink">
+                Maragogi <span className="font-light italic">Secret</span>
+              </h2>
+              <p className="font-sans text-muted text-sm mt-4 max-w-lg mx-auto leading-relaxed">
+                Dez perspectivas aéreas exclusivas sobre o litoral de Maragogi, Alagoas — recifes, embarcações e paisagens capturadas a dezenas de metros de altitude com o DJI Air 3S.
+              </p>
+            </div>
+
+            <div className="showcase-section">
+
+              {/* ═══ #1: HERO FULL-WIDTH — Arquitetura de Coral ═══ */}
+              <div
+                className={`showcase-piece showcase-hero ${isVisible(2) ? 'fade-in-up' : 'opacity-0'}`}
+                data-id="2"
+                onClick={() => onOpenModal(artworks[1])}
+              >
+                <ArtImage
+                  src={getImageSrc(artworks[1].filename)}
+                  alt={artworks[1].title}
+                  className="w-full h-full object-cover"
+                  style={{ minHeight: '100%' }}
+                />
+                <div className="hero-info">
+                  <span className="piece-number">{pad(1)}</span>
+                  <div>
+                    <span className="font-sans text-white/50 text-[10px] uppercase tracking-[0.25em]">
+                      {artworks[1].category}
+                    </span>
+                    <h3 className="font-serif text-white text-3xl md:text-4xl font-semibold mt-1" style={{textShadow: '0 2px 12px rgba(0,0,0,0.4)'}}>
+                      {artworks[1].title}
+                    </h3>
+                    <p className="font-sans text-white/70 text-sm mt-2 max-w-md hidden md:block">
+                      {artworks[1].description}
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <div className="showcase-spacer-lg" />
+
+              {/* ═══ #2-3: DUO ROW — Fronteira de Sal + Caminho do Mar ═══ */}
+              <div className="showcase-duo px-6 md:px-10">
+                {[artworks[2], artworks[3]].map((art, i) => (
+                  <div
+                    key={art.id}
+                    className={`showcase-piece showcase-duo-item ${isVisible(art.id) ? 'fade-in-up' : 'opacity-0'}`}
+                    data-id={art.id}
+                    style={{ animationDelay: `${i * 0.15}s` }}
+                    onClick={() => onOpenModal(art)}
+                  >
+                    <span className="duo-number">{pad(i + 2)}</span>
+                    <ArtImage
+                      src={getImageSrc(art.filename)}
+                      alt={art.title}
+                      className="w-full object-cover"
+                      style={{ aspectRatio: '16/10' }}
+                    />
+                    <div className="duo-info">
+                      <span className="font-sans text-white/50 text-[10px] uppercase tracking-[0.25em]">
+                        {art.category}
+                      </span>
+                      <h3 className="font-serif text-white text-xl md:text-2xl font-semibold mt-1" style={{textShadow: '0 2px 8px rgba(0,0,0,0.4)'}}>
+                        {art.title}
+                      </h3>
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              <div className="showcase-spacer-lg" />
+
+              {/* ═══ #4: SPLIT PANEL — Porto Seguro (img LEFT, text RIGHT) ═══ */}
+              <div
+                className={`showcase-piece showcase-split ${isVisible(5) ? 'fade-in-up' : 'opacity-0'}`}
+                data-id="5"
+                onClick={() => onOpenModal(artworks[4])}
+              >
+                <div className="split-image">
+                  <ArtImage
+                    src={getImageSrc(artworks[4].filename)}
+                    alt={artworks[4].title}
+                    className="w-full h-full object-cover"
+                    style={{ minHeight: '100%' }}
+                  />
+                </div>
+                <div className="split-text">
+                  <span className="piece-number">{pad(4)}</span>
+                  <span className="font-sans text-accent text-[10px] uppercase tracking-[0.25em] font-medium">
+                    {artworks[4].category}
+                  </span>
+                  <h3 className="font-serif text-ink text-3xl md:text-4xl font-semibold mt-2">
+                    {artworks[4].title}
+                  </h3>
+                  <p className="font-sans text-muted text-sm leading-relaxed mt-4 max-w-sm">
+                    {artworks[4].description}
+                  </p>
+                  <div className="mt-6 font-sans text-accent text-xs uppercase tracking-[0.2em] font-medium flex items-center gap-2">
+                    Ver detalhes
+                    <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
+                    </svg>
+                  </div>
+                </div>
+              </div>
+
+              <div className="showcase-spacer-lg" />
+
+              {/* ═══ #5-6: DUO ROW — Esmeralda Bruta + Aquarela Costeira ═══ */}
+              <div className="showcase-duo px-6 md:px-10">
+                {[artworks[5], artworks[6]].map((art, i) => (
+                  <div
+                    key={art.id}
+                    className={`showcase-piece showcase-duo-item ${isVisible(art.id) ? 'fade-in-up' : 'opacity-0'}`}
+                    data-id={art.id}
+                    style={{ animationDelay: `${i * 0.15}s` }}
+                    onClick={() => onOpenModal(art)}
+                  >
+                    <span className="duo-number">{pad(i + 5)}</span>
+                    <ArtImage
+                      src={getImageSrc(art.filename)}
+                      alt={art.title}
+                      className="w-full object-cover"
+                      style={{ aspectRatio: '16/10' }}
+                    />
+                    <div className="duo-info">
+                      <span className="font-sans text-white/50 text-[10px] uppercase tracking-[0.25em]">
+                        {art.category}
+                      </span>
+                      <h3 className="font-serif text-white text-xl md:text-2xl font-semibold mt-1" style={{textShadow: '0 2px 8px rgba(0,0,0,0.4)'}}>
+                        {art.title}
+                      </h3>
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              <div className="showcase-spacer-lg" />
+
+              {/* ═══ #7: SPLIT PANEL REVERSE — Divisa Natural (text LEFT, img RIGHT) ═══ */}
+              <div
+                className={`showcase-piece showcase-split reverse dark ${isVisible(8) ? 'fade-in-up' : 'opacity-0'}`}
+                data-id="8"
+                onClick={() => onOpenModal(artworks[7])}
+              >
+                <div className="split-text">
+                  <span className="piece-number">{pad(7)}</span>
+                  <span className="font-sans text-accent-light text-[10px] uppercase tracking-[0.25em] font-medium">
+                    {artworks[7].category}
+                  </span>
+                  <h3 className="font-serif text-white text-3xl md:text-4xl font-semibold mt-2">
+                    {artworks[7].title}
+                  </h3>
+                  <p className="font-sans text-white/60 text-sm leading-relaxed mt-4 max-w-sm">
+                    {artworks[7].description}
+                  </p>
+                  <div className="mt-6 font-sans text-accent-light text-xs uppercase tracking-[0.2em] font-medium flex items-center gap-2">
+                    Ver detalhes
+                    <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
+                    </svg>
+                  </div>
+                </div>
+                <div className="split-image">
+                  <ArtImage
+                    src={getImageSrc(artworks[7].filename)}
+                    alt={artworks[7].title}
+                    className="w-full h-full object-cover"
+                    style={{ minHeight: '100%' }}
+                  />
+                </div>
+              </div>
+
+              <div className="showcase-spacer-lg" />
+
+              {/* ═══ #8: HERO FULL-WIDTH — Oásis de Areia ═══ */}
+              <div
+                className={`showcase-piece showcase-hero ${isVisible(9) ? 'fade-in-up' : 'opacity-0'}`}
+                data-id="9"
+                onClick={() => onOpenModal(artworks[8])}
+              >
+                <ArtImage
+                  src={getImageSrc(artworks[8].filename)}
+                  alt={artworks[8].title}
+                  className="w-full h-full object-cover"
+                  style={{ minHeight: '100%' }}
+                />
+                <div className="hero-info">
+                  <span className="piece-number">{pad(8)}</span>
+                  <div>
+                    <span className="font-sans text-white/50 text-[10px] uppercase tracking-[0.25em]">
+                      {artworks[8].category}
+                    </span>
+                    <h3 className="font-serif text-white text-3xl md:text-4xl font-semibold mt-1" style={{textShadow: '0 2px 12px rgba(0,0,0,0.4)'}}>
+                      {artworks[8].title}
+                    </h3>
+                    <p className="font-sans text-white/70 text-sm mt-2 max-w-md hidden md:block">
+                      {artworks[8].description}
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <div className="showcase-spacer-lg" />
+
+              {/* ═══ #9: SPLIT PANEL — Constelação Náutica (img LEFT, text RIGHT) ═══ */}
+              <div
+                className={`showcase-piece showcase-split ${isVisible(10) ? 'fade-in-up' : 'opacity-0'}`}
+                data-id="10"
+                onClick={() => onOpenModal(artworks[9])}
+              >
+                <div className="split-image">
+                  <ArtImage
+                    src={getImageSrc(artworks[9].filename)}
+                    alt={artworks[9].title}
+                    className="w-full h-full object-cover"
+                    style={{ minHeight: '100%' }}
+                  />
+                </div>
+                <div className="split-text">
+                  <span className="piece-number">{pad(9)}</span>
+                  <span className="font-sans text-accent text-[10px] uppercase tracking-[0.25em] font-medium">
+                    {artworks[9].category}
+                  </span>
+                  <h3 className="font-serif text-ink text-3xl md:text-4xl font-semibold mt-2">
+                    {artworks[9].title}
+                  </h3>
+                  <p className="font-sans text-muted text-sm leading-relaxed mt-4 max-w-sm">
+                    {artworks[9].description}
+                  </p>
+                  <div className="mt-6 font-sans text-accent text-xs uppercase tracking-[0.2em] font-medium flex items-center gap-2">
+                    Ver detalhes
+                    <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
+                    </svg>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </section>
+        );
+      }
+
+      // ─── MODAL ───────────────────────────────────────────────────
+      function Modal({ artwork, onClose, onPrev, onNext }) {
+        const [showWall, setShowWall] = useState(false);
+        const [showDetails, setShowDetails] = useState(false);
+        const [closing, setClosing] = useState(false);
+
+        const modalRef = useRef(null);
+
+        const handleClose = useCallback(() => {
+          setClosing(true);
+          setTimeout(() => onClose(), 250);
+        }, [onClose]);
+
+        useEffect(() => {
+          const handleKey = (e) => {
+            if (e.key === "Escape") handleClose();
+            if (e.key === "ArrowLeft" && onPrev) onPrev();
+            if (e.key === "ArrowRight" && onNext) onNext();
+          };
+          document.addEventListener("keydown", handleKey);
+          document.body.style.overflow = "hidden";
+          if (modalRef.current) modalRef.current.scrollTop = 0;
+          return () => {
+            document.removeEventListener("keydown", handleKey);
+            document.body.style.overflow = "";
+          };
+        }, [handleClose, onPrev, onNext]);
+
+        if (!artwork) return null;
+
+        return (
+          <div
+            className={`fixed inset-0 z-[100] modal-backdrop flex items-center justify-center p-4 md:p-8 ${closing ? 'backdrop-exit' : 'backdrop-enter'}`}
+            onClick={handleClose}
+            role="dialog"
+            aria-modal="true"
+            aria-label={artwork.title}
+          >
+            {/* Navigation Arrows */}
+            {onPrev && (
+              <button className="modal-arrow prev" onClick={(e) => { e.stopPropagation(); onPrev(); }} aria-label="Foto anterior">
+                <svg className="w-5 h-5 text-ink" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
+                </svg>
+              </button>
+            )}
+            {onNext && (
+              <button className="modal-arrow next" onClick={(e) => { e.stopPropagation(); onNext(); }} aria-label="Próxima foto">
+                <svg className="w-5 h-5 text-ink" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
+                </svg>
+              </button>
+            )}
+
+            <div
+              ref={modalRef}
+              className={`relative bg-canvas rounded-lg max-w-5xl w-full max-h-[92vh] overflow-y-auto shadow-2xl ${closing ? 'modal-exit' : 'modal-enter'}`}
+              onClick={(e) => e.stopPropagation()}
+            >
+              {/* Close */}
+              <button
+                className="absolute top-4 right-4 z-10 w-10 h-10 rounded-full bg-white/90 hover:bg-white flex items-center justify-center shadow-md transition-all duration-200 hover:scale-110"
+                onClick={handleClose}
+                aria-label="Fechar"
+              >
+                <svg
+                  className="w-5 h-5 text-ink"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M6 18L18 6M6 6l12 12"
+                  />
+                </svg>
+              </button>
+
+              {!showWall ? (
+                <>
+                  {/* Image */}
+                  <div className="bg-gray-100">
+                    <ArtImage
+                      src={getImageSrc(artwork.filename)}
+                      alt={artwork.title}
+                      className="w-full max-h-[60vh] object-contain"
+                    />
+                  </div>
+                  {/* Info */}
+                  <div className="p-6 md:p-10">
+                    <span className="font-sans text-accent text-[11px] uppercase tracking-[0.2em] font-medium">
+                      {artwork.category}
+                    </span>
+                    <h3 className="font-serif text-3xl md:text-4xl font-semibold text-ink mt-2">
+                      {artwork.title}
+                    </h3>
+                    <p className="font-sans text-muted text-sm md:text-base leading-relaxed mt-4 max-w-2xl">
+                      {artwork.description}
+                    </p>
+
+                    {/* Actions */}
+                    <div className="flex flex-wrap gap-3 mt-8">
+                      <button
+                        className="px-6 py-3 bg-ink text-canvas font-sans text-xs uppercase tracking-widest rounded-sm hover:bg-accent transition-colors duration-300"
+                        onClick={() => setShowWall(true)}
+                      >
+                        Ver na Parede
+                      </button>
+                      <button
+                        className="px-6 py-3 border border-gray-300 text-ink font-sans text-xs uppercase tracking-widest rounded-sm hover:border-ink transition-colors duration-300"
+                        onClick={() => setShowDetails(!showDetails)}
+                      >
+                        {showDetails ? "Ocultar Detalhes" : "Detalhes Técnicos"}
+                      </button>
+                    </div>
+
+                    {/* Technical Details */}
+                    {showDetails && artwork.details && (
+                      <div className="mt-6 p-6 bg-warm rounded-md fade-in-up">
+                        <h4 className="font-serif text-lg font-semibold text-ink mb-4">
+                          Informações Técnicas
+                        </h4>
+                        <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+                          {Object.entries(artwork.details).map(
+                            ([key, value]) => (
+                              <div key={key}>
+                                <span className="font-sans text-[10px] uppercase tracking-[0.15em] text-muted block mb-1">
+                                  {key === "drone"
+                                    ? "Equipamento"
+                                    : key === "sensor"
+                                      ? "Sensor"
+                                      : key === "resolution"
+                                        ? "Resolução"
+                                        : key === "format"
+                                          ? "Formato"
+                                          : key === "location"
+                                            ? "Localização"
+                                            : key}
+                                </span>
+                                <span className="font-sans text-sm text-ink font-medium">
+                                  {value}
+                                </span>
+                              </div>
+                            ),
+                          )}
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                </>
+              ) : (
+                /* ─── WALL SIMULATION ─── */
+                <div className="wall-bg min-h-[70vh] flex flex-col items-center justify-center p-8 md:p-16 relative">
+                  <button
+                    className="absolute top-4 left-4 px-4 py-2 bg-white/90 hover:bg-white rounded-full font-sans text-xs uppercase tracking-widest text-ink shadow-md transition-all duration-200"
+                    onClick={() => setShowWall(false)}
+                  >
+                    ← Voltar
+                  </button>
+                  {/* Frame */}
+                  <div className="bg-white p-3 md:p-5 frame-shadow max-w-2xl w-full">
+                    <ArtImage
+                      src={getImageSrc(artwork.filename)}
+                      alt={artwork.title}
+                      className="w-full object-contain"
+                      style={{ maxHeight: "50vh" }}
+                    />
+                  </div>
+                  <p className="font-serif text-ink/70 text-sm italic mt-6">
+                    "{artwork.title}" — Simulação de ambiente
+                  </p>
+                  {/* Furniture hint */}
+                  <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-48 md:w-72 h-10 md:h-14 bg-gradient-to-t from-[#c4a882]/20 to-transparent rounded-t-lg" />
+                </div>
+              )}
+            </div>
+          </div>
+        );
+      }
+
+      // ─── ABOUT ───────────────────────────────────────────────────
+      function About() {
+        return (
+          <section id="sobre" className="py-20 md:py-32 bg-warm">
+            <div className="max-w-7xl mx-auto px-6 md:px-10">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-20 items-center">
+                {/* Photo */}
+                <div className="flex justify-center md:justify-end order-1 md:order-2">
+                  <div className="relative">
+                    <div className="w-64 h-64 md:w-80 md:h-80 rounded-full overflow-hidden shadow-xl">
+                      <ArtImage
+                        src="./foto-perfil.jpg"
+                        alt="Bruno França — Fotógrafo"
+                        className="w-full h-full object-cover"
+                      />
+                    </div>
+                    <div className="absolute -bottom-3 -right-3 bg-accent text-white rounded-full px-4 py-2 shadow-lg">
+                      <span className="font-sans text-[10px] uppercase tracking-widest">
+                        DJI Air 3S
+                      </span>
+                    </div>
+                  </div>
+                </div>
+                {/* Text */}
+                <div className="order-2 md:order-1">
+                  <p className="font-sans text-xs uppercase tracking-[0.3em] text-accent mb-3">
+                    Sobre o Fotógrafo
+                  </p>
+                  <h2 className="font-serif text-3xl md:text-4xl font-semibold text-ink leading-tight">
+                    Bruno França
+                  </h2>
+                  <div className="about-divider mt-6 mb-6" />
+                  <p className="font-sans text-muted text-sm md:text-base leading-relaxed mb-4">
+                    Fotógrafo aéreo especializado em capturar paisagens do litoral brasileiro sob uma perspectiva inédita. Utilizando o drone <strong className="text-ink">DJI Air 3S</strong> com sensor de 1 polegada e 50 megapixels, busco revelar padrões, texturas e composições invisíveis ao olhar terrestre.
+                  </p>
+                  <p className="font-sans text-muted text-sm md:text-base leading-relaxed mb-4">
+                    A coleção <strong className="text-ink">Maragogi Secret</strong> é o resultado de expedições sobre a costa de Maragogi, Alagoas — um dos destinos mais preservados do Brasil. Cada imagem transforma recifes em mapas, embarcações em estrelas e o turquesa do mar em tela.
+                  </p>
+                  <p className="font-sans text-muted text-sm md:text-base leading-relaxed">
+                    Meu trabalho explora a fronteira entre fotografia documental e arte visual, buscando transformar o registro aéreo em peças que dialogam com a estética fine art.
+                  </p>
+                  <div className="mt-8 flex items-center gap-4">
+                    <a
+                      href="https://instagram.com/obrunuaf"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center gap-2 text-accent hover:text-accent-light transition-colors"
+                    >
+                      <InstagramIcon />
+                      <span className="font-sans text-sm font-medium">
+                        @obrunuaf
+                      </span>
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+        );
+      }
+
+      // ─── CONTACT / FOOTER ────────────────────────────────────────
+      function Footer() {
+        return (
+          <footer id="contato" className="bg-ink text-white py-16 md:py-24">
+            <div className="max-w-7xl mx-auto px-6 md:px-10">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-12 items-start">
+                {/* Brand */}
+                <div>
+                  <div className="flex items-center gap-3 mb-3">
+                    <img src="./logo-bf.png" alt="Bruno França" className="w-10 h-10 rounded-md object-contain" style={{background: 'rgba(255,255,255,0.1)', padding: '2px'}} />
+                    <h3 className="font-serif text-2xl font-semibold">
+                      Bruno <span className="font-light italic text-accent-light">França</span>
+                    </h3>
+                  </div>
+                  <p className="font-sans text-white/50 text-sm leading-relaxed">
+                    Fotografia aérea fine art
+                    <br />
+                    do litoral brasileiro.
+                  </p>
+                </div>
+                {/* Contact */}
+                <div>
+                  <h4 className="font-sans text-xs uppercase tracking-[0.2em] text-white/40 mb-4">
+                    Contato
+                  </h4>
+                  <div className="flex flex-col gap-3">
+                    <a
+                      href="https://instagram.com/obrunuaf"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center gap-3 text-white/70 hover:text-white transition-colors"
+                    >
+                      <InstagramIcon className="w-5 h-5 flex-shrink-0" />
+                      <span className="font-sans text-sm">@obrunuaf</span>
+                    </a>
+                    <a
+                      href="mailto:brunoafranca97@gmail.com"
+                      className="flex items-center gap-3 text-white/70 hover:text-white transition-colors"
+                    >
+                      <svg
+                        className="w-5 h-5 flex-shrink-0"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="1.5"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75"
+                        />
+                      </svg>
+                      <span className="font-sans text-sm">
+                        brunoafranca97@gmail.com
+                      </span>
+                    </a>
+                    <a
+                      href="https://wa.me/5534993183916"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center gap-3 text-white/70 hover:text-white transition-colors"
+                    >
+                      <svg className="w-5 h-5 flex-shrink-0" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
+                      </svg>
+                      <span className="font-sans text-sm">WhatsApp</span>
+                    </a>
+                  </div>
+                </div>
+                {/* Info */}
+                <div>
+                  <h4 className="font-sans text-xs uppercase tracking-[0.2em] text-white/40 mb-4">
+                    Informações
+                  </h4>
+                  <p className="font-sans text-white/50 text-sm leading-relaxed">
+                    Todas as imagens são protegidas por direitos autorais. Para
+                    licenciamento, impressões ou colaborações, entre em contato.
+                  </p>
+                </div>
+              </div>
+              {/* Bottom bar */}
+              <div className="border-t border-white/10 mt-12 pt-8 flex flex-col md:flex-row items-center justify-between gap-4">
+                <p className="font-sans text-white/30 text-xs">
+                  © {new Date().getFullYear()} Bruno França. Todos os direitos
+                  reservados.
+                </p>
+                <p className="font-sans text-white/30 text-xs">
+                  obrunuaf.com.br
+                </p>
+              </div>
+            </div>
+          </footer>
+        );
+      }
+
+      // ─── APP ─────────────────────────────────────────────────────
+      function App() {
+        const [modalArt, setModalArt] = useState(null);
+        const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+        return (
+          <>
+            <Navbar onMobileMenuToggle={() => setMobileMenuOpen(true)} />
+            <MobileMenu
+              open={mobileMenuOpen}
+              onClose={() => setMobileMenuOpen(false)}
+            />
+            <Hero />
+            <Gallery onOpenModal={setModalArt} />
+            <About />
+            <Footer />
+            {modalArt && (
+              <Modal
+                artwork={modalArt}
+                onClose={() => setModalArt(null)}
+                onPrev={artworks.indexOf(modalArt) > 0 ? () => setModalArt(artworks[artworks.indexOf(modalArt) - 1]) : null}
+                onNext={artworks.indexOf(modalArt) < artworks.length - 1 ? () => setModalArt(artworks[artworks.indexOf(modalArt) + 1]) : null}
+              />
+            )}
+          </>
+        );
+      }
+
+      // ─── RENDER ──────────────────────────────────────────────────
+      const root = ReactDOM.createRoot(document.getElementById("root"));
+      root.render(<App />);
+    </script>
+  </body>
+</html>
