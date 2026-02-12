@@ -10,6 +10,9 @@
   --color-accent: #2a6f6f;
   --color-accent-light: #3d9b9b;
   --color-warm: #f5f0eb;
+  /* Section Padding */
+  --section-py: 5rem;    /* 80px */
+  --section-py-md: 8rem; /* 128px */
 }
 
 /* ===== BASE ===== */
@@ -157,6 +160,22 @@ body {
 }
 .photo-fade-in {
   animation: photoFadeIn 0.35s ease-out forwards;
+}
+
+/* U12: Photo slide transitions */
+@keyframes slideInRight {
+  from { transform: translateX(30px); opacity: 0; }
+  to { transform: translateX(0); opacity: 1; }
+}
+@keyframes slideInLeft {
+  from { transform: translateX(-30px); opacity: 0; }
+  to { transform: translateX(0); opacity: 1; }
+}
+.photo-slide-next {
+  animation: slideInRight 0.45s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+.photo-slide-prev {
+  animation: slideInLeft 0.45s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
 /* ===== FILTER PILLS ===== */
@@ -342,8 +361,13 @@ body {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding: 60px 50px;
+  padding: 40px 24px;
   background: #fafafa;
+}
+@media (min-width: 768px) {
+  .showcase-split .split-text {
+    padding: 60px 40px;
+  }
 }
 .showcase-split.dark .split-text {
   background: #1a1a1a;
@@ -409,10 +433,10 @@ body {
 
 /* Spacer between blocks */
 .showcase-spacer {
-  height: 80px;
+  height: var(--section-py);
 }
 .showcase-spacer-lg {
-  height: 120px;
+  height: var(--section-py-md);
 }
 
 /* Mobile responsive - showcase */
@@ -451,10 +475,10 @@ body {
     font-size: 2rem;
   }
   .showcase-spacer {
-    height: 40px;
+    height: 3rem; /* 48px */
   }
   .showcase-spacer-lg {
-    height: 60px;
+    height: 4rem; /* 64px */
   }
 }
 

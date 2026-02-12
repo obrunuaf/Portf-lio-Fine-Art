@@ -8,7 +8,7 @@ const ZOOM_LEVELS = {
   FULL: 'full',   // 100% resolution (up to 4x)
 }
 
-export default function ZoomableImage({ src, alt, className }) {
+export default function ZoomableImage({ src, alt, className, placeholderColor }) {
   const [zoomLevel, setZoomLevel] = useState(ZOOM_LEVELS.FIT)
   const [position, setPosition] = useState({ x: 0, y: 0 })
   const [isDragging, setIsDragging] = useState(false)
@@ -225,6 +225,7 @@ export default function ZoomableImage({ src, alt, className }) {
           src={src}
           alt={alt}
           className={className}
+          placeholderColor={placeholderColor}
         />
       </div>
     </div>

@@ -6,9 +6,11 @@ export default function Modal({ artwork, onClose, onPrev, onNext }) {
   const [closing, setClosing] = useState(false)
   const [controlsVisible, setControlsVisible] = useState(true)
   const [photoKey, setPhotoKey] = useState(0) // U8: triggers fade animation
+  const [direction, setDirection] = useState('next') // U12: slide direction
 
   const hideControlsTimer = useRef(null)
   const originalTitle = useRef(document.title) // U10: save original title
+  const lastActiveElement = useRef(null) // A4: save focus for restoration
 
   // Current position (e.g. "3 / 10")
   const currentIndex = artworks.indexOf(artwork)
@@ -54,10 +56,19 @@ export default function Modal({ artwork, onClose, onPrev, onNext }) {
   }, [resetHideTimer])
 
   useEffect(() => {
+    // A4: Save focus on mount
+    lastActiveElement.current = document.activeElement
+
     const handleKey = (e) => {
       if (e.key === "Escape") handleClose()
-      if (e.key === "ArrowLeft" && onPrev) onPrev()
-      if (e.key === "ArrowRight" && onNext) onNext()
+      if (e.key === "ArrowLeft" && onPrev) {
+        setDirection('prev')
+        onPrev()
+      }
+      if (e.key === "ArrowRight" && onNext) {
+        setDirection('next')
+        onNext()
+      }
     }
     document.addEventListener("keydown", handleKey)
     document.body.style.overflow = "hidden"
@@ -68,6 +79,11 @@ export default function Modal({ artwork, onClose, onPrev, onNext }) {
       document.body.style.overflow = ""
       document.title = originalTitle.current // U10: restore on unmount
       if (hideControlsTimer.current) clearTimeout(hideControlsTimer.current)
+
+      // A4: Restore focus on unmount
+      if (lastActiveElement.current && lastActiveElement.current.focus) {
+        lastActiveElement.current.focus()
+      }
     }
   }, [handleClose, onPrev, onNext, resetHideTimer])
 
@@ -77,8 +93,14 @@ export default function Modal({ artwork, onClose, onPrev, onNext }) {
   const handleTouchEnd = (e) => {
     if (!touchStartX.current) return
     const dist = touchStartX.current - e.changedTouches[0].clientX
-    if (dist > 50 && onNext) onNext()
-    if (dist < -50 && onPrev) onPrev()
+    if (dist > 50 && onNext) {
+      setDirection('next')
+      onNext()
+    }
+    if (dist < -50 && onPrev) {
+      setDirection('prev')
+      onPrev()
+    }
     touchStartX.current = null
   }
 
@@ -95,7 +117,10 @@ export default function Modal({ artwork, onClose, onPrev, onNext }) {
       aria-label={artwork.title}
     >
       {/* ─── Top Bar (auto-hide) ─── */}
-      <div className={`absolute top-0 left-0 right-0 z-20 flex items-center justify-between px-5 py-4 md:px-8 md:py-5 transition-opacity duration-500 ${controlsVisible ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}>
+      <div 
+        className={`absolute top-0 left-0 right-0 z-20 flex items-center justify-between px-5 py-4 md:px-8 md:py-5 transition-opacity duration-500 ${controlsVisible ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}
+        style={{ paddingTop: 'calc(1rem + var(--sat))', paddingLeft: 'calc(1.25rem + var(--sal))', paddingRight: 'calc(1.25rem + var(--sar))' }}
+      >
         <span className="text-white/60 text-[13px] font-sans font-medium tracking-wider">
           {positionLabel}
         </span>
@@ -114,7 +139,11 @@ export default function Modal({ artwork, onClose, onPrev, onNext }) {
       {onPrev && (
         <button
           className={`absolute left-3 md:left-5 top-1/2 -translate-y-1/2 z-20 w-11 h-11 md:w-12 md:h-12 rounded-full bg-white/8 hover:bg-white/15 flex items-center justify-center transition-all duration-300 ${controlsVisible ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}
-          onClick={(e) => { e.stopPropagation(); onPrev() }}
+          onClick={(e) => { 
+            e.stopPropagation()
+            setDirection('prev')
+            onPrev() 
+          }}
           aria-label="Foto anterior"
         >
           <svg className="w-5 h-5 text-white/70" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
@@ -125,7 +154,11 @@ export default function Modal({ artwork, onClose, onPrev, onNext }) {
       {onNext && (
         <button
           className={`absolute right-3 md:right-5 top-1/2 -translate-y-1/2 z-20 w-11 h-11 md:w-12 md:h-12 rounded-full bg-white/8 hover:bg-white/15 flex items-center justify-center transition-all duration-300 ${controlsVisible ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}
-          onClick={(e) => { e.stopPropagation(); onNext() }}
+          onClick={(e) => { 
+            e.stopPropagation()
+            setDirection('next')
+            onNext() 
+          }}
           aria-label="Próxima foto"
         >
           <svg className="w-5 h-5 text-white/70" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
@@ -139,31 +172,37 @@ export default function Modal({ artwork, onClose, onPrev, onNext }) {
         className="w-full h-full"
         onClick={(e) => { if (e.target === e.currentTarget) handleClose() }}
       >
-        {/* U8: key change triggers CSS fade-in animation */}
-        <div key={photoKey} className="relative w-full h-screen flex items-center justify-center photo-fade-in">
+        {/* U12: photo-slide-[direction] handles horizontal entering transition */}
+        <div key={photoKey} className={`relative w-full h-screen flex items-center justify-center ${direction === 'next' ? 'photo-slide-next' : 'photo-slide-prev'}`}>
           <div className="w-full h-full flex items-center justify-center px-4 py-14 md:px-16 md:py-16">
             <ZoomableImage
               src={getImageSrc(artwork.filename)}
               alt={artwork.title}
               className="w-full h-full object-contain"
+              placeholderColor={artwork.details?.color}
             />
           </div>
 
           {/* Overlay — Title, Category & Description */}
           <div
             className={`absolute bottom-0 left-0 right-0 z-10 pointer-events-none transition-opacity duration-500 ${controlsVisible ? 'opacity-100' : 'opacity-0'}`}
-            style={{ background: 'linear-gradient(to top, rgba(0,0,0,0.75) 0%, rgba(0,0,0,0.35) 45%, transparent 100%)' }}
+            style={{ background: 'linear-gradient(to top, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.4) 45%, transparent 100%)' }}
           >
-            <div className="px-8 pb-10 md:px-14 md:pb-14 pt-32 max-w-3xl">
-              <span className="font-sans text-white/45 text-[10px] uppercase tracking-[0.3em] font-medium block mb-2">
-                {artwork.category}
-              </span>
-              <h2 className="font-serif text-white text-xl md:text-3xl font-semibold leading-snug mb-3">
-                {artwork.title}
-              </h2>
-              <p className="font-sans text-white/45 text-xs md:text-sm leading-relaxed line-clamp-2">
-                {artwork.description}
-              </p>
+            <div 
+              className="max-w-7xl mx-auto w-full px-6 md:px-10 pb-10 md:pb-14 pt-32"
+              style={{ paddingBottom: 'calc(2.5rem + var(--sab))' }}
+            >
+              <div className="max-w-3xl">
+                <span className="font-sans text-white/45 text-[10px] uppercase tracking-[0.3em] font-medium block mb-2">
+                  {artwork.category}
+                </span>
+                <h2 className="font-serif text-white text-xl md:text-3xl font-semibold leading-snug mb-3">
+                  {artwork.title}
+                </h2>
+                <p className="font-sans text-white/45 text-xs md:text-sm leading-relaxed line-clamp-2">
+                  {artwork.description}
+                </p>
+              </div>
             </div>
           </div>
         </div>

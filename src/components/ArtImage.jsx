@@ -1,6 +1,6 @@
 import { useState } from 'react'
 
-export default function ArtImage({ src, alt, className, style, onLoad, eager, protected: isProtected = true }) {
+export default function ArtImage({ src, alt, className, style, onLoad, eager, placeholderColor, protected: isProtected = true }) {
   const [failed, setFailed] = useState(false)
   const [loaded, setLoaded] = useState(false)
 
@@ -11,26 +11,37 @@ export default function ArtImage({ src, alt, className, style, onLoad, eager, pr
     return (
       <div
         className={`img-placeholder ${className || ""}`}
-        style={{ minHeight: 220, ...style }}
+        style={{ minHeight: 220, backgroundColor: placeholderColor || '#e2e8f0', ...style }}
       >
-        <span>{alt}</span>
+        <span className="opacity-50">{alt}</span>
       </div>
     )
   }
 
+  // Split className into container parts (w-full, h-full, object-cover)
+  // We apply layout classes to the wrapper and image specific classes to the img
+  const isFill = className?.includes('w-full') && className?.includes('h-full')
+
   return (
     <div
-      className="relative"
+      className={`relative overflow-hidden ${className || ''}`}
       style={{ ...style, userSelect: 'none', WebkitUserSelect: 'none' }}
       onContextMenu={isProtected ? preventDownload : undefined}
     >
       {!loaded && (
-        <div className={`img-shimmer absolute inset-0 ${className || ""}`} style={{ minHeight: 220 }} />
+        <div 
+          className="absolute inset-0 z-0 animate-pulse" 
+          style={{ 
+            backgroundColor: placeholderColor || '#f5f0eb',
+            filter: 'blur(20px)',
+            transform: 'scale(1.1)'
+          }} 
+        />
       )}
       <img
         src={src}
         alt={alt}
-        className={`${className} transition-opacity duration-500 ${loaded ? 'opacity-100' : 'opacity-0'}`}
+        className={`w-full h-full transition-opacity duration-1000 ${loaded ? 'opacity-100' : 'opacity-0'} relative z-[1] ${isFill ? 'object-cover' : 'object-contain'}`}
         loading={eager ? "eager" : "lazy"}
         draggable={false}
         onError={() => setFailed(true)}
@@ -42,7 +53,7 @@ export default function ArtImage({ src, alt, className, style, onLoad, eager, pr
       {/* P1: Transparent overlay to block interactions with the image */}
       {isProtected && (
         <div
-          className="absolute inset-0 z-[1]"
+          className="absolute inset-0 z-2"
           onContextMenu={preventDownload}
           onDragStart={preventDownload}
           style={{ WebkitTouchCallout: 'none' }}

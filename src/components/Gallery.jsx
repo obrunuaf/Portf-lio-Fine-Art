@@ -37,9 +37,9 @@ export default function Gallery({ onOpenModal }) {
   const pad = (n) => String(n).padStart(2, '0')
 
   return (
-    <section id="galeria" className="py-20 md:py-32 max-w-7xl mx-auto">
+    <section id="galeria" className="py-20 md:py-32 overflow-x-hidden">
       {/* Section Header */}
-      <div className="text-center mb-20 px-6">
+      <div className="text-center mb-14 md:mb-20 px-6 md:px-10 max-w-7xl mx-auto">
         <div className="flex justify-center mb-8">
           <img
             src="/logo-maragogi-secret.png"
@@ -61,7 +61,7 @@ export default function Gallery({ onOpenModal }) {
 
       <div className="showcase-section">
 
-        {/* ═══ #1: HERO — Solidão Náutica (O Missing One!) ═══ */}
+        {/* ═══ #1: HERO — Solidão Náutica ═══ */}
         <div
           className={`showcase-piece showcase-hero ${isVisible(1) ? 'fade-in-up' : 'opacity-0'}`}
           data-id="1"
@@ -73,20 +73,23 @@ export default function Gallery({ onOpenModal }) {
             src={getImageSrc(artworks[0].filename)}
             alt={artworks[0].title}
             className="w-full h-full object-cover"
+            placeholderColor={artworks[0].details.color}
             style={{ minHeight: '100%' }}
           />
           <div className="hero-info">
-            <span className="piece-number">{pad(1)}</span>
-            <div>
-              <span className="font-sans text-white/50 text-[10px] uppercase tracking-[0.25em]">
-                {artworks[0].category}
-              </span>
-              <h3 className="font-serif text-white text-3xl md:text-4xl font-semibold mt-1" style={{textShadow: '0 2px 12px rgba(0,0,0,0.4)'}}>
-                {artworks[0].title}
-              </h3>
-              <p className="font-sans text-white/70 text-sm mt-2 max-w-md hidden md:block">
-                {artworks[0].description}
-              </p>
+            <div className="max-w-7xl mx-auto w-full flex items-end gap-6 md:gap-10 px-6 md:px-10">
+              <span className="piece-number">{pad(1)}</span>
+              <div className="pb-2">
+                <span className="font-sans text-white/50 text-[10px] uppercase tracking-[0.25em]">
+                  {artworks[0].category}
+                </span>
+                <h3 className="font-serif text-white text-3xl md:text-5xl font-semibold mt-1" style={{textShadow: '0 2px 12px rgba(0,0,0,0.4)'}}>
+                  {artworks[0].title}
+                </h3>
+                <p className="font-sans text-white/70 text-sm mt-3 max-w-md hidden md:block leading-relaxed">
+                  {artworks[0].description}
+                </p>
+              </div>
             </div>
           </div>
         </div>
@@ -106,6 +109,7 @@ export default function Gallery({ onOpenModal }) {
               src={getImageSrc(artworks[1].filename)}
               alt={artworks[1].title}
               className="w-full h-full object-cover"
+              placeholderColor={artworks[1].details?.color}
               style={{ minHeight: '100%' }}
             />
           </div>
@@ -129,7 +133,7 @@ export default function Gallery({ onOpenModal }) {
           </div>
         </div>
 
-        <div className="showcase-spacer-lg" />
+        <div className="showcase-spacer" />
 
         {/* ═══ #3-4: DUO — Fronteira de Sal + Caminho do Mar ═══ */}
         <div className="showcase-duo px-6 md:px-10">
@@ -148,6 +152,7 @@ export default function Gallery({ onOpenModal }) {
                 src={getImageSrc(art.filename)}
                 alt={art.title}
                 className="w-full object-cover"
+                placeholderColor={art.details?.color}
                 style={{ aspectRatio: '16/10' }}
               />
               <div className="duo-info">
@@ -176,20 +181,23 @@ export default function Gallery({ onOpenModal }) {
             src={getImageSrc(artworks[4].filename)}
             alt={artworks[4].title}
             className="w-full h-full object-cover"
+            placeholderColor={artworks[4].details.color}
             style={{ minHeight: '100%' }}
           />
           <div className="hero-info">
-            <span className="piece-number">{pad(5)}</span>
-            <div>
-              <span className="font-sans text-white/50 text-[10px] uppercase tracking-[0.25em]">
-                {artworks[4].category}
-              </span>
-              <h3 className="font-serif text-white text-3xl md:text-4xl font-semibold mt-1" style={{textShadow: '0 2px 12px rgba(0,0,0,0.4)'}}>
-                {artworks[4].title}
-              </h3>
-              <p className="font-sans text-white/70 text-sm mt-2 max-w-md hidden md:block">
-                {artworks[4].description}
-              </p>
+            <div className="max-w-7xl mx-auto w-full flex items-end gap-6 md:gap-10 px-6 md:px-10">
+              <span className="piece-number">{pad(5)}</span>
+              <div className="pb-2">
+                <span className="font-sans text-white/50 text-[10px] uppercase tracking-[0.25em]">
+                  {artworks[4].category}
+                </span>
+                <h3 className="font-serif text-white text-3xl md:text-5xl font-semibold mt-1" style={{textShadow: '0 2px 12px rgba(0,0,0,0.4)'}}>
+                  {artworks[4].title}
+                </h3>
+                <p className="font-sans text-white/70 text-sm mt-3 max-w-md hidden md:block leading-relaxed">
+                  {artworks[4].description}
+                </p>
+              </div>
             </div>
           </div>
         </div>
@@ -227,6 +235,7 @@ export default function Gallery({ onOpenModal }) {
               src={getImageSrc(artworks[5].filename)}
               alt={artworks[5].title}
               className="w-full h-full object-cover"
+              placeholderColor={artworks[5].details?.color}
               style={{ minHeight: '100%' }}
             />
           </div>
@@ -251,6 +260,7 @@ export default function Gallery({ onOpenModal }) {
                 src={getImageSrc(art.filename)}
                 alt={art.title}
                 className="w-full object-cover"
+                placeholderColor={art.details?.color}
                 style={{ aspectRatio: '16/10' }}
               />
               <div className="duo-info">
@@ -265,7 +275,7 @@ export default function Gallery({ onOpenModal }) {
           ))}
         </div>
 
-        <div className="showcase-spacer-lg" />
+        <div className="showcase-spacer" />
 
         {/* ═══ #9: HERO — Oásis de Areia ═══ */}
         <div
@@ -279,20 +289,23 @@ export default function Gallery({ onOpenModal }) {
             src={getImageSrc(artworks[8].filename)}
             alt={artworks[8].title}
             className="w-full h-full object-cover"
+            placeholderColor={artworks[8].details.color}
             style={{ minHeight: '100%' }}
           />
           <div className="hero-info">
-            <span className="piece-number">{pad(9)}</span>
-            <div>
-              <span className="font-sans text-white/50 text-[10px] uppercase tracking-[0.25em]">
-                {artworks[8].category}
-              </span>
-              <h3 className="font-serif text-white text-3xl md:text-4xl font-semibold mt-1" style={{textShadow: '0 2px 12px rgba(0,0,0,0.4)'}}>
-                {artworks[8].title}
-              </h3>
-              <p className="font-sans text-white/70 text-sm mt-2 max-w-md hidden md:block">
-                {artworks[8].description}
-              </p>
+            <div className="max-w-7xl mx-auto w-full flex items-end gap-6 md:gap-10 px-6 md:px-10">
+              <span className="piece-number">{pad(9)}</span>
+              <div className="pb-2">
+                <span className="font-sans text-white/50 text-[10px] uppercase tracking-[0.25em]">
+                  {artworks[8].category}
+                </span>
+                <h3 className="font-serif text-white text-3xl md:text-5xl font-semibold mt-1" style={{textShadow: '0 2px 12px rgba(0,0,0,0.4)'}}>
+                  {artworks[8].title}
+                </h3>
+                <p className="font-sans text-white/70 text-sm mt-3 max-w-md hidden md:block leading-relaxed">
+                  {artworks[8].description}
+                </p>
+              </div>
             </div>
           </div>
         </div>
@@ -312,6 +325,7 @@ export default function Gallery({ onOpenModal }) {
               src={getImageSrc(artworks[9].filename)}
               alt={artworks[9].title}
               className="w-full h-full object-cover"
+              placeholderColor={artworks[9].details?.color}
               style={{ minHeight: '100%' }}
             />
           </div>

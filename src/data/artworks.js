@@ -13,6 +13,7 @@ export const artworks = [
       resolution: "8064 × 6048 px",
       format: "JPEG",
       location: "São Bento, Maragogi — AL",
+      color: "#2A6F6F" // Deep Turquoise
     },
   },
   {
@@ -29,6 +30,7 @@ export const artworks = [
       resolution: "8064 × 6048 px",
       format: "JPEG",
       location: "Maragogi — AL",
+      color: "#D4A373" // Sand/Ochre
     },
   },
   {
@@ -45,6 +47,7 @@ export const artworks = [
       resolution: "8064 × 6048 px",
       format: "JPEG",
       location: "Maragogi — AL",
+      color: "#3D9B9B" // Aqua
     },
   },
   {
@@ -61,6 +64,7 @@ export const artworks = [
       resolution: "8064 × 6048 px",
       format: "JPEG",
       location: "Maragogi — AL",
+      color: "#1B4D4D" // Deep Sea
     },
   },
   {
@@ -77,6 +81,7 @@ export const artworks = [
       resolution: "8064 × 6048 px",
       format: "JPEG",
       location: "Maragogi — AL",
+      color: "#4A7A7A" // Muted Turquoise
     },
   },
   {
@@ -93,6 +98,7 @@ export const artworks = [
       resolution: "8064 × 6048 px",
       format: "JPEG",
       location: "Maragogi — AL",
+      color: "#2E5D5D" // Emerald
     },
   },
   {
@@ -109,6 +115,7 @@ export const artworks = [
       resolution: "8064 × 6048 px",
       format: "JPEG",
       location: "Maragogi — AL",
+      color: "#C5A986" // Warm Sand
     },
   },
   {
@@ -125,6 +132,7 @@ export const artworks = [
       resolution: "8064 × 6048 px",
       format: "JPEG",
       location: "Maragogi — AL",
+      color: "#5C8B8B" // Ocean Breeze
     },
   },
   {
@@ -141,6 +149,7 @@ export const artworks = [
       resolution: "8064 × 6048 px",
       format: "JPEG",
       location: "Maragogi — AL",
+      color: "#DEB887" // Burly Wood / Sand
     },
   },
   {
@@ -157,6 +166,7 @@ export const artworks = [
       resolution: "8064 × 6048 px",
       format: "JPEG",
       location: "Maragogi — AL",
+      color: "#163838" // Midnight Teal
     },
   },
 ]

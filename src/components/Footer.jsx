@@ -1,9 +1,19 @@
+import { useState } from 'react'
 import InstagramIcon from './InstagramIcon'
 
 export default function Footer() {
+  const [copied, setCopied] = useState(false)
+
+  const handleCopyEmail = (e) => {
+    e.preventDefault()
+    navigator.clipboard.writeText('brunoafranca97@gmail.com')
+    setCopied(true)
+    setTimeout(() => setCopied(false), 2000)
+  }
+
   return (
-    <footer id="contato" className="bg-ink text-white py-16 md:py-24">
-      <div className="max-w-7xl mx-auto px-6 md:px-10">
+    <footer id="contato" className="bg-ink text-white py-20 md:py-32">
+      <div className="max-w-7xl mx-auto px-6 md:px-10 safe-bottom">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-12 items-start">
           {/* Brand */}
           <div>
@@ -34,15 +44,22 @@ export default function Footer() {
                 <InstagramIcon className="w-5 h-5 flex-shrink-0" />
                 <span className="font-sans text-sm">@obrunuaf</span>
               </a>
-              <a
-                href="mailto:brunoafranca97@gmail.com"
-                className="flex items-center gap-3 text-white/70 hover:text-white transition-colors"
+              <button
+                onClick={handleCopyEmail}
+                className="flex items-center gap-3 text-white/70 hover:text-white transition-colors group relative w-fit"
+                title="Clique para copiar o e-mail"
               >
                 <svg className="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75" />
                 </svg>
                 <span className="font-sans text-sm">brunoafranca97@gmail.com</span>
-              </a>
+                
+                {copied && (
+                  <span className="absolute left-full ml-4 px-2 py-1 bg-accent text-[10px] text-white uppercase tracking-widest rounded animate-fade-in whitespace-nowrap">
+                    Copiado!
+                  </span>
+                )}
+              </button>
               <a
                 href="https://wa.me/5534993183916"
                 target="_blank"
