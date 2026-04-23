@@ -1,4 +1,4 @@
-import { useState, useRef, useCallback, useEffect } from 'react'
+import React, { useState, useRef, useCallback, useEffect } from 'react'
 import ArtImage from './ArtImage'
 
 // Flickr-style 3-level zoom: FIT → FILL → FULL
@@ -8,15 +8,22 @@ const ZOOM_LEVELS = {
   FULL: 'full',   // 100% resolution (up to 4x)
 }
 
-export default function ZoomableImage({ src, alt, className, placeholderColor }) {
+interface ZoomableImageProps {
+  src: string
+  alt: string
+  className?: string
+  placeholderColor?: string
+}
+
+export default function ZoomableImage({ src, alt, className, placeholderColor }: ZoomableImageProps) {
   const [zoomLevel, setZoomLevel] = useState(ZOOM_LEVELS.FIT)
   const [position, setPosition] = useState({ x: 0, y: 0 })
   const [isDragging, setIsDragging] = useState(false)
-  const containerRef = useRef(null)
-  const dragStart = useRef({ x: 0, y: 0 })
-  const posStart = useRef({ x: 0, y: 0 })
-  const pinchStartDist = useRef(null)
-  const pinchStartScale = useRef(1)
+  const containerRef = useRef<HTMLDivElement | null>(null)
+  const dragStart = useRef<{ x: number; y: number }>({ x: 0, y: 0 })
+  const posStart = useRef<{ x: number; y: number }>({ x: 0, y: 0 })
+  const pinchStartDist = useRef<number | null>(null)
+  const pinchStartScale = useRef<number>(1)
   const [customScale, setCustomScale] = useState(3)
 
   const isZoomed = zoomLevel !== ZOOM_LEVELS.FIT
@@ -39,7 +46,7 @@ export default function ZoomableImage({ src, alt, className, placeholderColor })
   }, [src])
 
   // Clamp position
-  const clampPosition = useCallback((pos, s) => {
+  const clampPosition = useCallback((pos: { x: number; y: number }, s: number) => {
     if (s <= 1) return { x: 0, y: 0 }
     const maxOffset = ((s - 1) / s) * 50
     return {
@@ -59,7 +66,7 @@ export default function ZoomableImage({ src, alt, className, placeholderColor })
   }
 
   // Click to cycle through zoom levels (Flickr-style)
-  const handleClick = useCallback((e) => {
+  const handleClick = useCallback((e: React.MouseEvent) => {
     // Don't trigger if user was dragging
     if (isDragging) return
     
@@ -94,7 +101,7 @@ export default function ZoomableImage({ src, alt, className, placeholderColor })
 
 
   // Mouse drag for panning (only when zoomed)
-  const handleMouseDown = useCallback((e) => {
+  const handleMouseDown = useCallback((e: React.MouseEvent) => {
     if (!isZoomed) return
     e.preventDefault()
     dragStart.current = { x: e.clientX, y: e.clientY }
@@ -102,7 +109,7 @@ export default function ZoomableImage({ src, alt, className, placeholderColor })
     // Don't set isDragging yet - wait for actual movement
   }, [isZoomed, position])
 
-  const handleMouseMove = useCallback((e) => {
+  const handleMouseMove = useCallback((e: React.MouseEvent) => {
     if (!isZoomed) return
     if (!dragStart.current.x) return
     
@@ -134,7 +141,7 @@ export default function ZoomableImage({ src, alt, className, placeholderColor })
 
 
   // Touch: pinch to zoom + drag to pan
-  const handleTouchStart = useCallback((e) => {
+  const handleTouchStart = useCallback((e: React.TouchEvent) => {
     if (e.touches.length === 2) {
       const dx = e.touches[0].clientX - e.touches[1].clientX
       const dy = e.touches[0].clientY - e.touches[1].clientY
@@ -147,7 +154,7 @@ export default function ZoomableImage({ src, alt, className, placeholderColor })
     }
   }, [scale, isZoomed, position])
 
-  const handleTouchMove = useCallback((e) => {
+  const handleTouchMove = useCallback((e: React.TouchEvent) => {
     if (e.touches.length === 2 && pinchStartDist.current) {
       e.preventDefault()
       const dx = e.touches[0].clientX - e.touches[1].clientX
@@ -173,14 +180,14 @@ export default function ZoomableImage({ src, alt, className, placeholderColor })
     }
   }, [isDragging, isZoomed, scale, clampPosition])
 
-  const handleTouchEnd = useCallback((e) => {
+  const handleTouchEnd = useCallback((e: React.TouchEvent) => {
     if (e.touches.length < 2) pinchStartDist.current = null
     if (e.touches.length === 0) setTimeout(() => setIsDragging(false), 50)
   }, [])
 
   // Double tap to toggle zoom (mobile)
-  const lastTap = useRef(0)
-  const handleTouchEndDoubleTap = useCallback((e) => {
+  const lastTap = useRef<number>(0)
+  const handleTouchEndDoubleTap = useCallback((e: React.TouchEvent) => {
     handleTouchEnd(e)
     const now = Date.now()
     if (now - lastTap.current < 300) {

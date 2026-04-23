@@ -1,11 +1,22 @@
-import { useState } from 'react'
+import React, { useState, CSSProperties } from 'react'
 
-export default function ArtImage({ src, alt, className, style, onLoad, eager, placeholderColor, protected: isProtected = true }) {
+interface ArtImageProps {
+  src: string
+  alt: string
+  className?: string
+  style?: CSSProperties
+  onLoad?: () => void
+  eager?: boolean
+  placeholderColor?: string
+  protected?: boolean
+}
+
+export default function ArtImage({ src, alt, className, style, onLoad, eager, placeholderColor, protected: isProtected = true }: ArtImageProps) {
   const [failed, setFailed] = useState(false)
   const [loaded, setLoaded] = useState(false)
 
   // P1: Block right-click and drag
-  const preventDownload = (e) => e.preventDefault()
+  const preventDownload = (e: React.SyntheticEvent) => e.preventDefault()
 
   if (failed) {
     return (

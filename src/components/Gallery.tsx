@@ -1,10 +1,29 @@
 import { useState, useEffect, useRef } from 'react'
 import ArtImage from './ArtImage'
-import { artworks, getImageSrc } from '../data/artworks'
+import { artworks, getImageSrc, Artwork } from '../data/artworks'
 
-export default function Gallery({ onOpenModal }) {
-  const [visibleItems, setVisibleItems] = useState(new Set())
-  const observerRef = useRef(null)
+interface GalleryProps {
+  onOpenModal: (art: Artwork) => void
+}
+
+const CATEGORIES = ['Todos', ...artworks.map(a => a.category)]
+
+function scrollToCategory(cat: string) {
+  if (cat === 'Todos') {
+    document.getElementById('galeria')?.scrollIntoView({ behavior: 'smooth' })
+    return
+  }
+  const el = document.querySelector(`[data-category="${cat}"]`)
+  if (el) {
+    const top = (el as HTMLElement).getBoundingClientRect().top + window.scrollY - 80
+    window.scrollTo({ top, behavior: 'smooth' })
+  }
+}
+
+export default function Gallery({ onOpenModal }: GalleryProps) {
+  const [visibleItems, setVisibleItems] = useState(new Set<string>())
+  const [activeCategory, setActiveCategory] = useState('Todos')
+  const observerRef = useRef<IntersectionObserver | null>(null)
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -12,9 +31,8 @@ export default function Gallery({ onOpenModal }) {
         (entries) => {
           entries.forEach((entry) => {
             if (entry.isIntersecting) {
-              setVisibleItems(
-                (prev) => new Set([...prev, entry.target.dataset.id]),
-              )
+              const id = (entry.target as HTMLElement).dataset.id
+              if (id) setVisibleItems((prev) => new Set([...prev, id]))
               observerRef.current?.unobserve(entry.target)
             }
           })
@@ -23,7 +41,7 @@ export default function Gallery({ onOpenModal }) {
       )
 
       document.querySelectorAll(".showcase-piece").forEach((el) => {
-        observerRef.current.observe(el)
+        observerRef.current?.observe(el)
       })
     }, 50)
 
@@ -33,8 +51,8 @@ export default function Gallery({ onOpenModal }) {
     }
   }, [])
 
-  const isVisible = (id) => visibleItems.has(String(id))
-  const pad = (n) => String(n).padStart(2, '0')
+  const isVisible = (id: number) => visibleItems.has(String(id))
+  const pad = (n: number) => String(n).padStart(2, '0')
 
   return (
     <section id="galeria" className="py-20 md:py-32 overflow-x-hidden">
@@ -57,6 +75,28 @@ export default function Gallery({ onOpenModal }) {
         <p className="font-sans text-muted text-sm mt-4 max-w-lg mx-auto leading-relaxed">
           Dez perspectivas aéreas exclusivas sobre o litoral de Maragogi, Alagoas — recifes, embarcações e paisagens capturadas a dezenas de metros de altitude com o DJI Air 3S.
         </p>
+
+        {/* Counter */}
+        <p className="font-sans text-[11px] uppercase tracking-[0.35em] text-accent/70 mt-8 font-medium">
+          {artworks.length} obras &nbsp;·&nbsp; Maragogi, AL &nbsp;·&nbsp; 2026
+        </p>
+
+        {/* Category filter pills */}
+        <div className="flex flex-wrap justify-center gap-2 mt-8">
+          {CATEGORIES.map(cat => (
+            <button
+              key={cat}
+              onClick={() => { setActiveCategory(cat); scrollToCategory(cat) }}
+              className={`font-sans text-[10px] uppercase tracking-[0.2em] px-4 py-1.5 rounded-full border transition-all duration-200 ${
+                activeCategory === cat
+                  ? 'bg-accent text-white border-accent'
+                  : 'bg-transparent text-muted border-muted/30 hover:border-accent hover:text-accent'
+              }`}
+            >
+              {cat}
+            </button>
+          ))}
+        </div>
       </div>
 
       <div className="showcase-section">
@@ -65,6 +105,7 @@ export default function Gallery({ onOpenModal }) {
         <div
           className={`showcase-piece showcase-hero ${isVisible(1) ? 'fade-in-up' : 'opacity-0'}`}
           data-id="1"
+          data-category={artworks[0].category}
           onClick={() => onOpenModal(artworks[0])}
           role="button" tabIndex={0} aria-label={`Ver ${artworks[0].title}`}
           onKeyDown={(e) => e.key === 'Enter' && onOpenModal(artworks[0])}
@@ -100,6 +141,7 @@ export default function Gallery({ onOpenModal }) {
         <div
           className={`showcase-piece showcase-split ${isVisible(2) ? 'fade-in-up' : 'opacity-0'}`}
           data-id="2"
+          data-category={artworks[1].category}
           onClick={() => onOpenModal(artworks[1])}
           role="button" tabIndex={0} aria-label={`Ver ${artworks[1].title}`}
           onKeyDown={(e) => e.key === 'Enter' && onOpenModal(artworks[1])}
@@ -173,6 +215,7 @@ export default function Gallery({ onOpenModal }) {
         <div
           className={`showcase-piece showcase-hero ${isVisible(5) ? 'fade-in-up' : 'opacity-0'}`}
           data-id="5"
+          data-category={artworks[4].category}
           onClick={() => onOpenModal(artworks[4])}
           role="button" tabIndex={0} aria-label={`Ver ${artworks[4].title}`}
           onKeyDown={(e) => e.key === 'Enter' && onOpenModal(artworks[4])}
@@ -208,6 +251,7 @@ export default function Gallery({ onOpenModal }) {
         <div
           className={`showcase-piece showcase-split reverse dark ${isVisible(6) ? 'fade-in-up' : 'opacity-0'}`}
           data-id="6"
+          data-category={artworks[5].category}
           onClick={() => onOpenModal(artworks[5])}
           role="button" tabIndex={0} aria-label={`Ver ${artworks[5].title}`}
           onKeyDown={(e) => e.key === 'Enter' && onOpenModal(artworks[5])}
@@ -281,6 +325,7 @@ export default function Gallery({ onOpenModal }) {
         <div
           className={`showcase-piece showcase-hero ${isVisible(9) ? 'fade-in-up' : 'opacity-0'}`}
           data-id="9"
+          data-category={artworks[8].category}
           onClick={() => onOpenModal(artworks[8])}
           role="button" tabIndex={0} aria-label={`Ver ${artworks[8].title}`}
           onKeyDown={(e) => e.key === 'Enter' && onOpenModal(artworks[8])}
@@ -316,6 +361,7 @@ export default function Gallery({ onOpenModal }) {
         <div
           className={`showcase-piece showcase-split ${isVisible(10) ? 'fade-in-up' : 'opacity-0'}`}
           data-id="10"
+          data-category={artworks[9].category}
           onClick={() => onOpenModal(artworks[9])}
           role="button" tabIndex={0} aria-label={`Ver ${artworks[9].title}`}
           onKeyDown={(e) => e.key === 'Enter' && onOpenModal(artworks[9])}

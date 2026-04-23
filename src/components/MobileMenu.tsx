@@ -1,6 +1,11 @@
 import InstagramIcon from './InstagramIcon'
 
-export default function MobileMenu({ open, onClose }) {
+interface MobileMenuProps {
+  open: boolean
+  onClose: () => void
+}
+
+export default function MobileMenu({ open, onClose }: MobileMenuProps) {
   return (
     <div className={`fixed inset-0 z-[60] ${open ? "" : "pointer-events-none"}`}>
       {/* Backdrop */}

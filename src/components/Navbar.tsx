@@ -1,7 +1,11 @@
 import { useState, useEffect } from 'react'
 import InstagramIcon from './InstagramIcon'
 
-export default function Navbar({ onMobileMenuToggle }) {
+interface NavbarProps {
+  onMobileMenuToggle: () => void
+}
+
+export default function Navbar({ onMobileMenuToggle }: NavbarProps) {
   const [scrolled, setScrolled] = useState(false)
 
   useEffect(() => {

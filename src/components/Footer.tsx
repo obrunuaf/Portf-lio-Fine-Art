@@ -1,10 +1,10 @@
-import { useState } from 'react'
+import React, { useState } from 'react'
 import InstagramIcon from './InstagramIcon'
 
 export default function Footer() {
   const [copied, setCopied] = useState(false)
 
-  const handleCopyEmail = (e) => {
+  const handleCopyEmail = (e: React.MouseEvent) => {
     e.preventDefault()
     navigator.clipboard.writeText('brunoafranca97@gmail.com')
     setCopied(true)

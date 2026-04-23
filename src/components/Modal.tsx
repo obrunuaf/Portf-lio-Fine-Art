@@ -1,16 +1,24 @@
-import { useState, useEffect, useRef, useCallback } from 'react'
+import React, { useState, useEffect, useRef, useCallback } from 'react'
 import ZoomableImage from './ZoomableImage'
-import { artworks, getImageSrc } from '../data/artworks'
+import { artworks, getImageSrc, Artwork } from '../data/artworks'
 
-export default function Modal({ artwork, onClose, onPrev, onNext }) {
+interface ModalProps {
+  artwork: Artwork
+  onClose: () => void
+  onPrev: (() => void) | null
+  onNext: (() => void) | null
+}
+
+export default function Modal({ artwork, onClose, onPrev, onNext }: ModalProps) {
   const [closing, setClosing] = useState(false)
   const [controlsVisible, setControlsVisible] = useState(true)
   const [photoKey, setPhotoKey] = useState(0) // U8: triggers fade animation
   const [direction, setDirection] = useState('next') // U12: slide direction
+  const [detailsOpen, setDetailsOpen] = useState(false)
 
-  const hideControlsTimer = useRef(null)
+  const hideControlsTimer = useRef<ReturnType<typeof setTimeout> | null>(null)
   const originalTitle = useRef(document.title) // U10: save original title
-  const lastActiveElement = useRef(null) // A4: save focus for restoration
+  const lastActiveElement = useRef<HTMLElement | null>(null) // A4: save focus for restoration
 
   // Current position (e.g. "3 / 10")
   const currentIndex = artworks.indexOf(artwork)
@@ -57,9 +65,9 @@ export default function Modal({ artwork, onClose, onPrev, onNext }) {
 
   useEffect(() => {
     // A4: Save focus on mount
-    lastActiveElement.current = document.activeElement
+    lastActiveElement.current = document.activeElement as HTMLElement | null
 
-    const handleKey = (e) => {
+    const handleKey = (e: KeyboardEvent) => {
       if (e.key === "Escape") handleClose()
       if (e.key === "ArrowLeft" && onPrev) {
         setDirection('prev')
@@ -88,9 +96,9 @@ export default function Modal({ artwork, onClose, onPrev, onNext }) {
   }, [handleClose, onPrev, onNext, resetHideTimer])
 
   // Swipe support (mobile)
-  const touchStartX = useRef(null)
-  const handleTouchStart = (e) => { touchStartX.current = e.targetTouches[0].clientX }
-  const handleTouchEnd = (e) => {
+  const touchStartX = useRef<number | null>(null)
+  const handleTouchStart = (e: React.TouchEvent) => { touchStartX.current = e.targetTouches[0].clientX }
+  const handleTouchEnd = (e: React.TouchEvent) => {
     if (!touchStartX.current) return
     const dist = touchStartX.current - e.changedTouches[0].clientX
     if (dist > 50 && onNext) {
@@ -124,15 +132,51 @@ export default function Modal({ artwork, onClose, onPrev, onNext }) {
         <span className="text-white/60 text-[13px] font-sans font-medium tracking-wider">
           {positionLabel}
         </span>
-        <button
-          className="w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center transition-all duration-200"
-          onClick={handleClose}
-          aria-label="Fechar"
-        >
-          <svg className="w-5 h-5 text-white/80" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
-          </svg>
-        </button>
+        <div className="flex items-center gap-2">
+          <button
+            className={`w-10 h-10 rounded-full flex items-center justify-center transition-all duration-200 ${detailsOpen ? 'bg-white/20' : 'bg-white/10 hover:bg-white/20'}`}
+            onClick={() => setDetailsOpen(o => !o)}
+            aria-label="Detalhes técnicos"
+          >
+            <svg className="w-4 h-4 text-white/80" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M13 16h-1v-4h-1m1-4h.01M12 2a10 10 0 110 20A10 10 0 0112 2z" />
+            </svg>
+          </button>
+          <button
+            className="w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center transition-all duration-200"
+            onClick={handleClose}
+            aria-label="Fechar"
+          >
+            <svg className="w-5 h-5 text-white/80" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
+        </div>
+      </div>
+
+      {/* ─── Details Panel (slide-in from right) ─── */}
+      <div
+        className={`absolute top-0 right-0 h-full z-20 w-72 bg-black/90 backdrop-blur-md border-l border-white/10 transition-transform duration-300 ${detailsOpen ? 'translate-x-0' : 'translate-x-full'}`}
+        style={{ paddingTop: 'calc(4rem + var(--sat))' }}
+      >
+        <div className="px-6 py-8 space-y-6">
+          <h3 className="font-serif text-white text-xl font-semibold">{artwork.title}</h3>
+          <p className="font-sans text-white/50 text-xs leading-relaxed">{artwork.description}</p>
+          <div className="space-y-4 pt-4 border-t border-white/10">
+            {Object.entries({
+              'Drone': artwork.details.drone,
+              'Sensor': artwork.details.sensor,
+              'Resolução': artwork.details.resolution,
+              'Formato': artwork.details.format,
+              'Local': artwork.details.location,
+            }).map(([label, value]) => (
+              <div key={label}>
+                <p className="font-sans text-[10px] uppercase tracking-[0.3em] text-white/30 mb-1">{label}</p>
+                <p className="font-sans text-sm text-white/80">{value}</p>
+              </div>
+            ))}
+          </div>
+        </div>
       </div>
 
       {/* ─── Navigation Arrows (auto-hide) ─── */}

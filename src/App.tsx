@@ -6,21 +6,22 @@ import Gallery from './components/Gallery'
 import Modal from './components/Modal'
 import About from './components/About'
 import Footer from './components/Footer'
-import { artworks } from './data/artworks'
+import { artworks, Artwork } from './data/artworks'
+import CustomCursor from './components/CustomCursor'
 
 export default function App() {
-  const [modalIndex, setModalIndex] = useState(null)
+  const [modalIndex, setModalIndex] = useState<number | null>(null)
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [showScrollTop, setShowScrollTop] = useState(false)
 
-  const openModal = useCallback((art) => {
+  const openModal = useCallback((art: Artwork) => {
     const idx = artworks.indexOf(art)
     if (idx !== -1) setModalIndex(idx)
   }, [])
 
   const closeModal = useCallback(() => setModalIndex(null), [])
-  const prevArt = useCallback(() => setModalIndex(i => (i > 0 ? i - 1 : i)), [])
-  const nextArt = useCallback(() => setModalIndex(i => (i < artworks.length - 1 ? i + 1 : i)), [])
+  const prevArt = useCallback(() => setModalIndex(i => (i !== null && i > 0 ? i - 1 : i)), [])
+  const nextArt = useCallback(() => setModalIndex(i => (i !== null && i < artworks.length - 1 ? i + 1 : i)), [])
 
   const modalArt = modalIndex !== null ? artworks[modalIndex] : null
 
@@ -37,6 +38,7 @@ export default function App() {
 
   return (
     <>
+      <CustomCursor />
       <Navbar onMobileMenuToggle={() => setMobileMenuOpen(true)} />
       <MobileMenu
         open={mobileMenuOpen}
@@ -50,8 +52,8 @@ export default function App() {
         <Modal
           artwork={modalArt}
           onClose={closeModal}
-          onPrev={modalIndex > 0 ? prevArt : null}
-          onNext={modalIndex < artworks.length - 1 ? nextArt : null}
+          onPrev={modalIndex !== null && modalIndex > 0 ? prevArt : null}
+          onNext={modalIndex !== null && modalIndex < artworks.length - 1 ? nextArt : null}
         />
       )}
 
