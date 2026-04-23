@@ -8,6 +8,9 @@ import About from './components/About'
 import Footer from './components/Footer'
 import { artworks, Artwork } from './data/artworks'
 import CustomCursor from './components/CustomCursor'
+import Process from './components/Process'
+import Prints from './components/Prints'
+import Expeditions from './components/Expeditions'
 
 export default function App() {
   const [modalIndex, setModalIndex] = useState<number | null>(null)
@@ -46,7 +49,10 @@ export default function App() {
       />
       <Hero />
       <Gallery onOpenModal={openModal} />
+      <Process />
       <About />
+      <Prints />
+      <Expeditions />
       <Footer />
       {modalArt && (
         <Modal

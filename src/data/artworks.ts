@@ -111,6 +111,8 @@ export const artworks: Artwork[] = [
     description: "A intensidade pura do turquesa alagoano, dividido pela linha orgânica dos recifes.",
     category: "Cor",
     orientation: "landscape",
+    printAvailable: true,
+    edition: 20,
     details: {
       drone: "DJI Air 3S",
       sensor: '1" CMOS 50MP',
@@ -175,6 +177,8 @@ export const artworks: Artwork[] = [
     description: "Visto de cima, as embarcações espalhadas pelo mar lembram estrelas em um céu líquido.",
     category: "Top Down",
     orientation: "landscape",
+    printAvailable: true,
+    edition: 15,
     details: {
       drone: "DJI Air 3S",
       sensor: '1" CMOS 50MP',
